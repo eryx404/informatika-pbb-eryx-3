@@ -1,0 +1,3128 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ИНФОРМАТИКА ПББ 2026 — 3-БӨЛІМ (342–503 СҰРАҚТАР)</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --bg-elev: #101728;
+      --card: #151e32;
+      --card-soft: rgba(21, 30, 50, 0.88);
+      --border: #23304d;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --cyan: #38bdf8;
+      --cyan-dark: #0284c7;
+      --green: #10b981;
+      --red: #ef4444;
+      --amber: #f59e0b;
+      --purple: #a855f7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(168, 85, 247, 0.16), transparent 34%),
+        radial-gradient(circle at 88% 10%, rgba(56, 189, 248, 0.16), transparent 34%),
+        radial-gradient(circle at 50% 92%, rgba(16, 185, 129, 0.08), transparent 38%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+      padding-bottom: 56px;
+    }
+
+    button, input, select {
+      font-family: inherit;
+    }
+
+    #confettiCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* HEADER */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      background: rgba(11, 15, 25, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      color: #0b0f19;
+      font-weight: 900;
+      font-size: 0.9rem;
+      padding: 8px 12px;
+      border-radius: 12px;
+      letter-spacing: 0.4px;
+      box-shadow: 0 6px 18px rgba(56, 189, 248, 0.25);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      color: #fff;
+    }
+
+    .brand-sub {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.3px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.14s ease, background 0.16s ease, border-color 0.16s ease, opacity 0.16s ease;
+      text-decoration: none;
+    }
+
+    .btn:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    .btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    .btn-cyan {
+      background: linear-gradient(135deg, var(--cyan), #0ea5e9);
+      color: #08101f;
+      box-shadow: 0 6px 18px rgba(56, 189, 248, 0.24);
+    }
+
+    .btn-cyan:hover:not(:disabled) {
+      filter: brightness(1.08);
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, var(--purple), #7c3aed);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(168, 85, 247, 0.28);
+    }
+
+    .btn-purple:hover:not(:disabled) {
+      filter: brightness(1.08);
+    }
+
+    .btn-amber {
+      background: linear-gradient(135deg, var(--amber), #ea580c);
+      color: #0b0f19;
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.25);
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, var(--green), #059669);
+      color: #04130d;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: rgba(239, 68, 68, 0.28);
+    }
+
+    .btn-ghost {
+      background: var(--card);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-ghost:hover:not(:disabled) {
+      border-color: var(--cyan);
+      background: #1b2740;
+    }
+
+    .btn-sound-on {
+      background: rgba(16, 185, 129, 0.14);
+      border-color: rgba(16, 185, 129, 0.38);
+      color: #6ee7b7;
+    }
+
+    .btn-sound-off {
+      background: var(--card);
+      border-color: var(--border);
+      color: var(--muted);
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 18px 16px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* STATS GRID */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      background: var(--card-soft);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .stat-sub {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 7px;
+      border-radius: 99px;
+      background: #0c1220;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+      transition: width 0.35s ease;
+    }
+
+    .err-pill {
+      background: rgba(239, 68, 68, 0.18);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      padding: 2px 9px;
+      border-radius: 99px;
+      font-size: 0.76rem;
+      font-weight: 900;
+    }
+
+    .err-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    /* MODE SWITCHER */
+    .mode-bar {
+      background: var(--card-soft);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .mode-pills {
+      display: flex;
+      gap: 6px;
+      background: #0c1220;
+      padding: 5px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .mode-btn {
+      padding: 9px 14px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.83rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.16s;
+    }
+
+    .mode-btn.active-game {
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      color: #08101f;
+    }
+
+    .mode-btn.active-study {
+      background: linear-gradient(135deg, var(--green), #14b8a6);
+      color: #051610;
+    }
+
+    .mode-hint {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      padding: 0 4px;
+    }
+
+    /* TABS */
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      padding: 13px 12px;
+      border-radius: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: #cbd5e1;
+      font-weight: 800;
+      font-size: 0.84rem;
+      cursor: pointer;
+      transition: 0.16s;
+      text-align: center;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--cyan);
+      color: #fff;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--purple), #4f46e5);
+      border-color: rgba(192, 132, 252, 0.5);
+      color: #fff;
+      box-shadow: 0 8px 22px rgba(124, 58, 237, 0.28);
+    }
+
+    /* CARDS GRID */
+    .section-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #e2e8f0;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.55);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .badge-purple {
+      background: rgba(168, 85, 247, 0.18);
+      color: #d8b4fe;
+      border: 1px solid rgba(168, 85, 247, 0.38);
+    }
+
+    .badge-cyan {
+      background: rgba(56, 189, 248, 0.16);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .badge-green {
+      background: rgba(16, 185, 129, 0.16);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.38);
+    }
+
+    .badge-amber {
+      background: rgba(245, 158, 11, 0.18);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .card-title {
+      font-size: 1.02rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .card-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    /* EXAM PANEL */
+    .exam-box {
+      max-width: 660px;
+      margin: 8px auto;
+      background: var(--card);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .exam-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .exam-spec {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    /* DATABASE / SEARCH */
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .search-input, .filter-select {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: #fff;
+      border-radius: 14px;
+      padding: 12px 15px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search-input:focus, .filter-select:focus {
+      border-color: var(--cyan);
+    }
+
+    .bank-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .bank-opts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .bank-opt {
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      background: #0e1627;
+      border: 1px solid var(--border);
+      color: #cbd5e1;
+      word-break: break-word;
+    }
+
+    .bank-opt.is-ans {
+      background: rgba(16, 185, 129, 0.16);
+      border-color: var(--green);
+      color: #ecfdf5;
+      font-weight: 800;
+    }
+
+    /* QUIZ VIEW */
+    .quiz-hud {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .hud-left, .hud-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hud-pill {
+      padding: 6px 12px;
+      border-radius: 11px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      border: 1px solid var(--border);
+      background: var(--bg-elev);
+    }
+
+    .pill-streak {
+      background: rgba(245, 158, 11, 0.18);
+      border-color: rgba(245, 158, 11, 0.45);
+      color: #fcd34d;
+    }
+
+    .pill-score {
+      background: rgba(168, 85, 247, 0.18);
+      border-color: rgba(168, 85, 247, 0.45);
+      color: #e9d5ff;
+    }
+
+    .pill-timer {
+      background: rgba(56, 189, 248, 0.16);
+      border-color: rgba(56, 189, 248, 0.45);
+      color: #7dd3fc;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .pill-timer.danger {
+      background: rgba(239, 68, 68, 0.22);
+      border-color: rgba(239, 68, 68, 0.6);
+      color: #fecaca;
+    }
+
+    .quiz-progress-track {
+      width: 100%;
+      height: 8px;
+      border-radius: 99px;
+      background: #101728;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .quiz-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      transition: width 0.28s ease;
+    }
+
+    /* CONTEXT STORY PANEL */
+    .context-panel {
+      background: #10182b;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 18px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+    }
+
+    .context-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .context-panel-title {
+      font-size: 0.96rem;
+      font-weight: 900;
+      color: var(--cyan);
+    }
+
+    .context-text {
+      font-size: 0.88rem;
+      color: #dbeafe;
+      white-space: pre-wrap;
+      line-height: 1.55;
+    }
+
+    /* QUESTION CARD */
+    .q-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+    }
+
+    .q-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .q-text {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.45;
+    }
+
+    .code-box {
+      background: #070b14;
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 14px;
+      padding: 13px 15px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.84rem;
+      line-height: 1.55;
+      color: #bae6fd;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* QUIZIZZ OPTION TILES */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .opt-tile {
+      border-radius: 16px;
+      padding: 15px 16px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.94rem;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 68px;
+      border: 2px solid transparent;
+      transition: transform 0.14s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+    }
+
+    .opt-tile:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+    }
+
+    .opt-tile:disabled {
+      cursor: default;
+    }
+
+    .opt-0 { background: linear-gradient(135deg, #2563eb, #1d4ed8); border-color: rgba(147, 197, 253, 0.32); }
+    .opt-1 { background: linear-gradient(135deg, #0d9488, #0f766e); border-color: rgba(94, 234, 212, 0.32); }
+    .opt-2 { background: linear-gradient(135deg, #d97706, #b45309); border-color: rgba(253, 224, 71, 0.32); }
+    .opt-3 { background: linear-gradient(135deg, #9333ea, #7e22ce); border-color: rgba(216, 180, 254, 0.32); }
+
+    .opt-key {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .opt-label {
+      flex: 1;
+      word-break: break-word;
+      line-height: 1.35;
+    }
+
+    .opt-correct {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      border-color: #a7f3d0 !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.35) !important;
+      opacity: 1 !important;
+    }
+
+    .opt-wrong {
+      background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+      border-color: #fecaca !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.35) !important;
+      opacity: 1 !important;
+    }
+
+    .opt-dim {
+      opacity: 0.36;
+      filter: grayscale(0.35);
+    }
+
+    .opt-exam-chosen {
+      outline: 3px solid #facc15;
+      box-shadow: 0 0 0 5px rgba(250, 204, 21, 0.25);
+    }
+
+    .feedback-bar {
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .fb-ok {
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      color: #a7f3d0;
+    }
+
+    .fb-err {
+      background: rgba(239, 68, 68, 0.16);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #fecaca;
+    }
+
+    .fb-warn {
+      background: rgba(245, 158, 11, 0.16);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      color: #fde68a;
+    }
+
+    .q-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    /* STUDY NAVIGATOR */
+    .study-nav-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-top: 14px;
+    }
+
+    .nav-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .nav-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: var(--bg-elev);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-dot.cur {
+      border-color: var(--amber);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.35);
+      color: #fff;
+    }
+
+    .nav-dot.ok { background: rgba(16, 185, 129, 0.25); border-color: var(--green); color: #a7f3d0; }
+    .nav-dot.bad { background: rgba(239, 68, 68, 0.25); border-color: var(--red); color: #fecaca; }
+    .nav-dot.picked { background: rgba(56, 189, 248, 0.25); border-color: var(--cyan); color: #e0f2fe; }
+
+    /* CUSTOM VISUALS: EXCEL, UNICODE, BROWSER, SVG */
+    .vis-wrap {
+      width: 100%;
+      overflow-x: auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .xl-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 14px;
+      border: 2px solid #cbd5e1;
+      overflow: hidden;
+      min-width: 320px;
+      max-width: 100%;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    }
+
+    .xl-head {
+      background: #f1f5f9;
+      border-bottom: 1px solid #cbd5e1;
+      padding: 6px 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .xl-pill {
+      background: #16a34a;
+      color: #fff;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 0.72rem;
+    }
+
+    .xl-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .xl-tbl th {
+      background: #e2e8f0;
+      color: #334155;
+      padding: 6px 10px;
+      border: 1px solid #cbd5e1;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .xl-tbl td {
+      padding: 6px 10px;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .xl-tbl td.rn {
+      background: #e2e8f0;
+      color: #475569;
+      font-weight: 800;
+      text-align: center;
+      width: 34px;
+    }
+
+    .xl-tbl td.hi {
+      background: #dcfce7;
+      color: #14532d;
+      font-weight: 800;
+      font-family: ui-monospace, monospace;
+    }
+
+    .xl-tbl td.tgt {
+      background: #fef9c3;
+      color: #854d0e;
+      font-weight: 800;
+      outline: 2px dashed #ca8a04;
+      outline-offset: -2px;
+      text-align: center;
+    }
+
+    .svg-box {
+      background: #0d1424;
+      border: 1px solid #2b3a5c;
+      border-radius: 16px;
+      padding: 14px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    .browser-mock {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 14px;
+      border: 2px solid #94a3b8;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .browser-chrome {
+      background: #e2e8f0;
+      padding: 8px 12px 0;
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      border-bottom: 1px solid #cbd5e1;
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 5px;
+      padding-bottom: 9px;
+    }
+
+    .browser-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .browser-tab {
+      background: #ffffff;
+      padding: 6px 16px;
+      border-radius: 8px 8px 0 0;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      border-bottom: none;
+    }
+
+    .browser-url {
+      background: #f8fafc;
+      padding: 6px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.76rem;
+      color: #64748b;
+      font-family: ui-monospace, monospace;
+    }
+
+    .browser-body {
+      padding: 16px 26px;
+      font-size: 0.96rem;
+      font-weight: 600;
+    }
+
+    .browser-body ol {
+      padding-left: 20px;
+      line-height: 1.8;
+    }
+
+    .uni-grid {
+      width: 100%;
+      background: #0d1424;
+      border: 1px solid #2b3a5c;
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .uni-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--cyan);
+      margin-bottom: 8px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .dark-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .dark-tbl th {
+      background: #1b2844;
+      color: #7dd3fc;
+      padding: 6px 8px;
+      border: 1px solid #2b3a5c;
+      text-align: center;
+    }
+
+    .dark-tbl td {
+      padding: 5px 8px;
+      border: 1px solid #23304d;
+      text-align: center;
+      color: #e2e8f0;
+    }
+
+    .dark-tbl tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .dual-tables {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .vr-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+
+    .vr-card {
+      background: #0d1424;
+      border: 1px solid #2b3a5c;
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .vr-caption {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #e2e8f0;
+    }
+
+    .vr-sub {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    /* RESULTS VIEW */
+    .result-card {
+      max-width: 780px;
+      margin: 0 auto 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px 22px;
+      text-align: center;
+    }
+
+    .res-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .res-box {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 10px;
+    }
+
+    .res-num {
+      font-size: 1.65rem;
+      font-weight: 900;
+      margin-top: 4px;
+    }
+
+    .review-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 20px;
+    }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(5, 8, 16, 0.78);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: var(--card);
+      border: 1px solid #33456b;
+      border-radius: 22px;
+      max-width: 520px;
+      width: 100%;
+      padding: 22px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .modal-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .modal-body {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      overflow-y: auto;
+    }
+
+    .modal-foot {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .kbd-hint {
+      text-align: center;
+      font-size: 0.76rem;
+      color: #64748b;
+      margin-top: 22px;
+    }
+
+    .kbd {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: #cbd5e1;
+      font-family: ui-monospace, monospace;
+      font-size: 0.72rem;
+    }
+
+    @media (max-width: 820px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .tabs { grid-template-columns: repeat(2, 1fr); }
+      .options-grid { grid-template-columns: 1fr; }
+      .bank-opts { grid-template-columns: 1fr; }
+      .dual-tables { grid-template-columns: 1fr; }
+      .vr-cards { grid-template-columns: 1fr; }
+      .res-grid { grid-template-columns: repeat(2, 1fr); }
+      .exam-specs { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- STICKY HEADER -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand" onclick="goHome()">
+        <div class="brand-badge">PBB 3.0</div>
+        <div>
+          <div class="brand-sub">РЕАЛ ПББ 2026 • 63 ЖАБЫҚ + 20 КОНТЕКСТ (99 СҰРАҚ)</div>
+          <div class="brand-title">ИНФОРМАТИКА ПББ 2026 — QUIZIZZ ТРЕНАЖЕР (3-БӨЛІМ · 342–503)</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button id="soundBtn" class="btn btn-sound-on" onclick="toggleSound()">🔊 Дыбыс: Қосулы</button>
+        <button class="btn btn-cyan" onclick="goHome()">🏠 Басты бет</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ==================== DASHBOARD VIEW ==================== -->
+    <section id="dashboardView">
+      <!-- Stats Row -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label"><span>База көлемі</span><span>📚</span></div>
+          <div class="stat-value">162</div>
+          <div class="stat-sub">63 жабық + 20 контекст (99 сұрақ)</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label"><span>Үздік емтихан</span><span>🏆</span></div>
+          <div id="bestExamVal" class="stat-value" style="color:var(--amber);">—</div>
+          <div class="stat-sub">Өту межесі: ≥32/40 (80%)</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label"><span>Игерілгені</span><span id="solvedPctLabel" style="color:var(--green);">0%</span></div>
+          <div class="stat-value" style="color:var(--green);"><span id="solvedVal">0</span> <span style="font-size:0.9rem;color:var(--muted);">/ 162</span></div>
+          <div class="progress-track"><div id="solvedBar" class="progress-fill" style="width:0%;"></div></div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label"><span>Қателер банкі</span><span id="errCountBadge" class="err-pill">0</span></div>
+          <div class="err-actions">
+            <button class="btn btn-amber" style="flex:1;padding:8px 10px;font-size:0.78rem;" onclick="startErrorBank()">🔄 Қатемен жұмыс</button>
+            <button class="btn btn-danger" style="padding:8px 10px;font-size:0.78rem;" title="Қателер банкін тазалау" onclick="askClearErrors()">🗑️</button>
+          </div>
+          <div class="stat-sub">Қателескен сұрақтар сақталады</div>
+        </div>
+      </div>
+
+      <!-- Mode Selector -->
+      <div class="mode-bar">
+        <div class="mode-pills">
+          <button id="modeGameBtn" class="mode-btn active-game" onclick="setMode('game')">🎮 Ойын режимі (40с, Streak, Ұпай)</button>
+          <button id="modeStudyBtn" class="mode-btn" onclick="setMode('study')">📚 Жаттау режимі (Таймерсіз + Навигатор)</button>
+        </div>
+        <div id="modeHint" class="mode-hint">🔥 <b>Ойын режимі:</b> 40 сек таймер, жылдамдық бонусы және дұрыс жауап сериясы.</div>
+      </div>
+
+      <!-- 4 Main Tabs -->
+      <nav class="tabs">
+        <button id="tab-contexts" class="tab-btn active" onclick="switchTab('contexts')">📖 20 Мәтіндік Контекст (99 сұрақ)</button>
+        <button id="tab-closed" class="tab-btn" onclick="switchTab('closed')">📦 Жабық сұрақтар (342–404)</button>
+        <button id="tab-exam" class="tab-btn" onclick="switchTab('exam')">🎓 Емтихан (40 сұрақ, 60 мин)</button>
+        <button id="tab-bank" class="tab-btn" onclick="switchTab('bank')">🔍 162 База &amp; Іздеу</button>
+      </nav>
+
+      <!-- TAB 1: 20 CONTEXTS -->
+      <div id="panel-contexts">
+        <div class="section-toolbar">
+          <div class="section-title">ІІ бөлім • Барлық 20 мәтіндік блок (№405–№503)</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-purple" onclick="startContextMarathon(false)">🚀 Барлық 99 Контекст Марафоны</button>
+            <button class="btn btn-ghost" onclick="startContextMarathon(true)">🔀 Аралас (99)</button>
+          </div>
+        </div>
+        <div id="contextsGrid" class="cards-grid"></div>
+      </div>
+
+      <!-- TAB 2: CLOSED QUESTIONS -->
+      <div id="panel-closed" class="hidden">
+        <div class="section-toolbar">
+          <div class="section-title">І бөлім • Жабық сұрақтар және жалпы жинақтар</div>
+        </div>
+        <div id="closedGrid" class="cards-grid"></div>
+      </div>
+
+      <!-- TAB 3: EXAM -->
+      <div id="panel-exam" class="hidden">
+        <div class="exam-box">
+          <div style="font-size:3rem;margin-bottom:8px;">🎓</div>
+          <h2 style="font-size:1.55rem;font-weight:900;color:#fff;">ПББ 2026 Емтихан Симуляторы</h2>
+          <p style="font-size:0.9rem;color:#cbd5e1;margin-top:8px;">
+            342–503 базасынан кездейсоқ <b>40 сұрақ</b> (жабық тесттер + мәтіндік контексттер аралас) іріктеледі.
+            Уақыт — <b>60 минут</b>. Сұрақтар арасында еркін өтіп, <b>🚩 белгі</b> қоюға және картадан қарауға болады.
+          </p>
+          <div class="exam-specs">
+            <div class="exam-spec">
+              <div class="stat-sub">Сұрақ саны</div>
+              <div style="font-size:1.3rem;font-weight:900;color:#fff;margin-top:3px;">40 сұрақ</div>
+            </div>
+            <div class="exam-spec">
+              <div class="stat-sub">Уақыт</div>
+              <div style="font-size:1.3rem;font-weight:900;color:var(--cyan);margin-top:3px;">60 минут</div>
+            </div>
+            <div class="exam-spec">
+              <div class="stat-sub">Өту межесі</div>
+              <div style="font-size:1.3rem;font-weight:900;color:var(--green);margin-top:3px;">≥ 32 / 40</div>
+            </div>
+          </div>
+          <button class="btn btn-amber" style="padding:14px 28px;font-size:1rem;" onclick="startExam()">🚀 Емтиханды бастау (40 сұрақ)</button>
+        </div>
+      </div>
+
+      <!-- TAB 4: DATABASE & SEARCH -->
+      <div id="panel-bank" class="hidden">
+        <div class="search-bar">
+          <input id="bankSearch" type="text" class="search-input" oninput="renderBank()" placeholder="🔍 Сұрақ нөмірі (мыс. 349, 464), кілт сөз, Python, SQL, HTML, Excel, VR..." />
+          <select id="bankFilter" class="filter-select" onchange="renderBank()">
+            <option value="all">Барлық 162 сұрақ</option>
+            <option value="closed">📦 Жабық сұрақтар (342–404)</option>
+            <option value="context">📖 Контекст сұрақтары (405–503)</option>
+            <option value="visual">🖼️ Суретті &amp; Кестелі</option>
+            <option value="code">💻 Кодты сұрақтар</option>
+          </select>
+        </div>
+        <div id="bankCount" class="stat-sub" style="margin-bottom:10px;"></div>
+        <div id="bankList"></div>
+      </div>
+
+      <div class="kbd-hint">
+        Пернетақта: <span class="kbd">1–4</span> немесе <span class="kbd">A–D</span> — жауап таңдау •
+        <span class="kbd">Enter</span> / <span class="kbd">Space</span> — келесі •
+        <span class="kbd">←</span> <span class="kbd">→</span> — ауысу
+      </div>
+    </section>
+
+    <!-- ==================== QUIZ / EXAM VIEW ==================== -->
+    <section id="quizView" class="hidden">
+      <div class="quiz-hud">
+        <div class="hud-left">
+          <button class="btn btn-ghost" style="padding:7px 12px;" onclick="askExitQuiz()">← Шығу</button>
+          <div>
+            <div id="quizTitle" style="font-size:0.86rem;font-weight:900;color:var(--cyan);">Блок</div>
+            <div id="quizCounter" style="font-size:0.76rem;color:var(--muted);font-weight:700;">Сұрақ 1 / 40</div>
+          </div>
+        </div>
+        <div class="hud-right">
+          <div id="streakPill" class="hud-pill pill-streak hidden">🔥 0</div>
+          <div id="scorePill" class="hud-pill pill-score">⭐ 0 ұпай</div>
+          <div id="timerPill" class="hud-pill pill-timer">⏱ 40с</div>
+          <button id="flagBtn" class="btn btn-ghost hidden" style="padding:7px 11px;font-size:0.8rem;" onclick="toggleFlag()">🚩 Белгілеу</button>
+          <button class="btn btn-ghost" style="padding:7px 11px;font-size:0.8rem;" onclick="openMapModal()">🗺️ Карта</button>
+        </div>
+      </div>
+
+      <div class="quiz-progress-track">
+        <div id="quizProgressFill" class="quiz-progress-fill" style="width:0%;"></div>
+      </div>
+
+      <!-- Context Block Reading Panel -->
+      <div id="contextPanel" class="context-panel hidden">
+        <div class="context-panel-head">
+          <div id="contextPanelTitle" class="context-panel-title"></div>
+          <button id="ctxToggleBtn" class="btn btn-ghost" style="padding:4px 10px;font-size:0.74rem;" onclick="toggleContextPanel()">Жасыру</button>
+        </div>
+        <div id="contextPanelBody" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="q-card">
+        <div class="q-meta">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <span id="qIdBadge" class="badge badge-purple">#342</span>
+            <span id="qTopicBadge" class="badge badge-cyan">Бөлім</span>
+          </div>
+          <span id="qModeTag" class="stat-sub"></span>
+        </div>
+
+        <h2 id="qText" class="q-text"></h2>
+        <div id="qCodeWrap" class="hidden"><pre id="qCode" class="code-box"></pre></div>
+        <div id="qVisualWrap" class="hidden vis-wrap"></div>
+
+        <div id="optionsGrid" class="options-grid"></div>
+
+        <div id="feedbackBar" class="feedback-bar hidden">
+          <div id="feedbackMsg"></div>
+          <button class="btn btn-cyan" style="padding:8px 14px;" onclick="nextQ()">Келесі →</button>
+        </div>
+
+        <div class="q-footer">
+          <button id="prevBtn" class="btn btn-ghost" onclick="prevQ()">← Алдыңғы</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-danger" onclick="askFinishQuiz()">Аяқтау</button>
+            <button id="nextBtn" class="btn btn-cyan" onclick="nextQ()">Келесі →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Study / Exam inline navigator -->
+      <div id="studyNavBox" class="study-nav-box hidden">
+        <div class="stat-label"><span>Сұрақтар навигаторы</span><span id="navSummary"></span></div>
+        <div id="navDots" class="nav-dots"></div>
+      </div>
+    </section>
+
+    <!-- ==================== RESULTS VIEW ==================== -->
+    <section id="resultView" class="hidden">
+      <div class="result-card">
+        <div id="resEmoji" style="font-size:3.2rem;margin-bottom:8px;">🏆</div>
+        <h2 id="resTitle" style="font-size:1.6rem;font-weight:900;color:#fff;">Нәтиже</h2>
+        <p id="resSub" style="font-size:0.9rem;color:#cbd5e1;margin-top:6px;"></p>
+
+        <div class="res-grid">
+          <div class="res-box">
+            <div class="stat-sub">Дұрыс</div>
+            <div id="resCorrect" class="res-num" style="color:var(--green);">0 / 0</div>
+          </div>
+          <div class="res-box">
+            <div class="stat-sub">Пайыз</div>
+            <div id="resPct" class="res-num" style="color:var(--cyan);">0%</div>
+          </div>
+          <div class="res-box">
+            <div class="stat-sub">Ұпай</div>
+            <div id="resScore" class="res-num" style="color:var(--amber);">0</div>
+          </div>
+          <div class="res-box">
+            <div class="stat-sub">Макс. серия</div>
+            <div id="resStreak" class="res-num" style="color:#fb923c;">🔥 0</div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
+          <button id="retryWrongBtn" class="btn btn-amber hidden" onclick="retryWrong()">🔄 Қателерді қайта тапсыру</button>
+          <button class="btn btn-purple" onclick="restartQuiz()">🔁 Қайта бастау</button>
+          <button class="btn btn-ghost" onclick="goHome()">🏠 Басты бет</button>
+        </div>
+      </div>
+
+      <div class="review-wrap">
+        <div class="section-toolbar">
+          <div class="section-title">📋 Жауаптарды талдау</div>
+          <div style="display:flex;gap:6px;">
+            <button id="revAllBtn" class="btn btn-purple" style="padding:6px 12px;font-size:0.78rem;" onclick="renderReview('all')">Барлығы</button>
+            <button id="revWrongBtn" class="btn btn-ghost" style="padding:6px 12px;font-size:0.78rem;" onclick="renderReview('wrong')">Тек қателер</button>
+          </div>
+        </div>
+        <div id="reviewList"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CUSTOM MODAL (Replaces alert/confirm + serves as Map Modal) -->
+  <div id="modalBackdrop" class="modal-backdrop hidden" onclick="backdropClick(event)">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div id="modalTitle" class="modal-title">Хабарлама</div>
+        <button class="btn btn-ghost" style="padding:4px 10px;" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modalBody" class="modal-body"></div>
+      <div id="modalFoot" class="modal-foot"></div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. SOUND ENGINE (Web Audio API — 100% self-contained)
+    // =========================================================================
+    const Sound = {
+      enabled: true,
+      ctx: null,
+      ensure() {
+        if (!this.ctx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) this.ctx = new AC();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume().catch(() => {});
+        }
+      },
+      play(freq, dur, type = 'sine', vol = 0.08, delay = 0) {
+        if (!this.enabled) return;
+        try {
+          this.ensure();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          const t = this.ctx.currentTime + delay;
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, t);
+          gain.gain.setValueAtTime(vol, t);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(t);
+          osc.stop(t + dur);
+        } catch (e) {}
+      },
+      click() { this.play(500, 0.045, 'sine', 0.04, 0); },
+      correct() {
+        this.play(587.33, 0.12, 'triangle', 0.09, 0);
+        this.play(880, 0.22, 'triangle', 0.1, 0.09);
+      },
+      wrong() {
+        this.play(220, 0.16, 'sawtooth', 0.07, 0);
+        this.play(165, 0.24, 'sawtooth', 0.07, 0.12);
+      },
+      finish() {
+        [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => this.play(f, 0.24, 'triangle', 0.09, i * 0.1));
+      }
+    };
+
+    // =========================================================================
+    // 2. CUSTOM SVG DIAGRAMS & HTML TABLES BUILDERS
+    // =========================================================================
+    function buildNeuralNetSVG() {
+      const inY = [34, 86, 138, 190];
+      const hidY = [34, 86, 138, 190];
+      const outY = [80, 144];
+      const inX = 36, hidX = 165, outX = 295;
+      let edges = '';
+      // 4x4 = 16 directed edges from Input to Hidden
+      inY.forEach(y1 => {
+        hidY.forEach(y2 => {
+          const dx = hidX - inX, dy = y2 - y1;
+          const len = Math.hypot(dx, dy);
+          const xStart = inX + (dx / len) * 10;
+          const yStart = y1 + (dy / len) * 10;
+          const xEnd = hidX - (dx / len) * 23;
+          const yEnd = y2 - (dy / len) * 23;
+          edges += `<line x1="${xStart.toFixed(1)}" y1="${yStart.toFixed(1)}" x2="${xEnd.toFixed(1)}" y2="${yEnd.toFixed(1)}" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#nnArrow)"/>`;
+        });
+      });
+      // 4x2 = 8 directed edges from Hidden to Output
+      hidY.forEach(y1 => {
+        outY.forEach(y2 => {
+          const dx = outX - hidX, dy = y2 - y1;
+          const len = Math.hypot(dx, dy);
+          const xStart = hidX + (dx / len) * 20;
+          const yStart = y1 + (dy / len) * 20;
+          const xEnd = outX - (dx / len) * 23;
+          const yEnd = y2 - (dy / len) * 23;
+          edges += `<line x1="${xStart.toFixed(1)}" y1="${yStart.toFixed(1)}" x2="${xEnd.toFixed(1)}" y2="${yEnd.toFixed(1)}" stroke="#38bdf8" stroke-width="1.7" marker-end="url(#nnArrowCyan)"/>`;
+        });
+      });
+      // 2 output arrows pointing right
+      outY.forEach(y => {
+        edges += `<line x1="${outX + 20}" y1="${y}" x2="372" y2="${y}" stroke="#10b981" stroke-width="2.2" marker-end="url(#nnArrowGreen)"/>`;
+      });
+
+      const inNodes = inY.map((y, i) => `<circle cx="${inX}" cy="${y}" r="8" fill="#0b0f19" stroke="#f8fafc" stroke-width="2.5"/><text x="12" y="${y + 4}" fill="#94a3b8" font-size="10" font-weight="700">X${i + 1}</text>`).join('');
+      const hidNodes = hidY.map(y => `<circle cx="${hidX}" cy="${y}" r="19" fill="#1e293b" stroke="#a855f7" stroke-width="2.5"/>`).join('');
+      const outNodes = outY.map((y, i) => `<circle cx="${outX}" cy="${y}" r="19" fill="#1e293b" stroke="#10b981" stroke-width="2.5"/><text x="${outX}" y="${y + 4}" fill="#ecfdf5" font-size="11" font-weight="800" text-anchor="middle">Y${i + 1}</text>`).join('');
+
+      return `
+        <div class="svg-box">
+          <svg viewBox="0 0 390 226" width="380" height="220" style="max-width:100%;height:auto;" aria-label="Көпқабатты бір бағытты нейрондық желі">
+            <defs>
+              <marker id="nnArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#94a3b8"/>
+              </marker>
+              <marker id="nnArrowCyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+              </marker>
+              <marker id="nnArrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981"/>
+              </marker>
+            </defs>
+            ${edges}
+            ${inNodes}
+            ${hidNodes}
+            ${outNodes}
+            <text x="${inX}" y="218" fill="#cbd5e1" font-size="10" font-weight="700" text-anchor="middle">Кіріс (4)</text>
+            <text x="${hidX}" y="218" fill="#d8b4fe" font-size="10" font-weight="700" text-anchor="middle">Жасырын қабат (4)</text>
+            <text x="${outX}" y="218" fill="#6ee7b7" font-size="10" font-weight="700" text-anchor="middle">Шығыс (2)</text>
+          </svg>
+        </div>`;
+    }
+
+    function buildSketchUpShapesSVG() {
+      return `
+        <div class="svg-box" style="background:#f8fafc;border:2px solid #cbd5e1;">
+          <div style="font-size:0.75rem;font-weight:800;color:#334155;margin-bottom:8px;">SketchUp — Құралдар панелі</div>
+          <svg viewBox="0 0 310 66" width="300" height="64" style="max-width:100%;height:auto;" aria-label="SketchUp Фигуралар құралдар тобы">
+            <rect x="2" y="2" width="306" height="62" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+            <!-- 1. Rectangle -->
+            <g transform="translate(14,11)">
+              <rect x="0" y="0" width="46" height="44" rx="7" fill="#fff" stroke="#cbd5e1"/>
+              <rect x="10" y="12" width="26" height="20" fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2.2"/>
+              <circle cx="10" cy="32" r="2.5" fill="#dc2626"/>
+              <circle cx="36" cy="12" r="2.5" fill="#dc2626"/>
+            </g>
+            <!-- 2. Rotated Rectangle -->
+            <g transform="translate(72,11)">
+              <rect x="0" y="0" width="46" height="44" rx="7" fill="#fff" stroke="#cbd5e1"/>
+              <polygon points="10,27 25,10 38,20 23,37" fill="#fde68a" stroke="#b45309" stroke-width="2.2"/>
+              <line x1="8" y1="34" x2="36" y2="34" stroke="#64748b" stroke-width="1.3" stroke-dasharray="2,2"/>
+            </g>
+            <!-- 3. Circle -->
+            <g transform="translate(130,11)">
+              <rect x="0" y="0" width="46" height="44" rx="7" fill="#fff" stroke="#cbd5e1"/>
+              <circle cx="23" cy="22" r="13" fill="#bbf7d0" stroke="#15803d" stroke-width="2.2"/>
+              <circle cx="23" cy="22" r="2" fill="#dc2626"/>
+              <line x1="23" y1="22" x2="36" y2="22" stroke="#dc2626" stroke-width="1.5"/>
+            </g>
+            <!-- 4. Polygon -->
+            <g transform="translate(188,11)">
+              <rect x="0" y="0" width="46" height="44" rx="7" fill="#fff" stroke="#cbd5e1"/>
+              <polygon points="23,9 35,16 35,28 23,35 11,28 11,16" fill="#e9d5ff" stroke="#7e22ce" stroke-width="2.2"/>
+              <circle cx="23" cy="22" r="2" fill="#dc2626"/>
+            </g>
+            <!-- 5. Arc -->
+            <g transform="translate(246,11)">
+              <rect x="0" y="0" width="46" height="44" rx="7" fill="#fff" stroke="#cbd5e1"/>
+              <path d="M 10 32 Q 23 6 36 32" fill="none" stroke="#0284c7" stroke-width="2.6" stroke-linecap="round"/>
+              <circle cx="10" cy="32" r="2.5" fill="#dc2626"/>
+              <circle cx="36" cy="32" r="2.5" fill="#dc2626"/>
+              <circle cx="23" cy="19" r="2.2" fill="#16a34a"/>
+            </g>
+          </svg>
+        </div>`;
+    }
+
+    function buildBlock5Excel() {
+      return `
+        <div class="xl-card">
+          <div class="xl-head"><span class="xl-pill">EXCEL</span><span>Кірістірілген функциялар кестесі (C2 = 625)</span></div>
+          <table class="xl-tbl">
+            <thead><tr><th></th><th>A</th><th>B</th><th>C</th></tr></thead>
+            <tbody>
+              <tr><td class="rn">2</td><td><b>№</b></td><td><b>Көрсеткіштің сатысы:</b></td><td class="hi">625</td></tr>
+              <tr><td class="rn">3</td><td>1</td><td>Сапаның жоспарланған табу</td><td class="tgt">[B3 ?]</td></tr>
+              <tr><td class="rn">4</td><td>2</td><td>Сапаның түбірін табу</td><td></td></tr>
+              <tr><td class="rn">5</td><td>3</td><td>Сапаның қосындысын табу</td><td class="tgt">[C5]</td></tr>
+              <tr><td class="rn">6</td><td>4</td><td>Цифрлардың ең кішісін анықтау</td><td class="tgt">[C6]</td></tr>
+              <tr><td class="rn">7</td><td>5</td><td>Қорытынды табу</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    function buildBlock12Unicode() {
+      const rows = [
+        ['SPACE', 'U+0020', '32', 'A', 'U+0041', '65', 'a', 'U+0061', '97', 'А', 'U+0410', '1040', 'а', 'U+0430', '1072'],
+        ['!', 'U+0021', '33', 'B', 'U+0042', '66', 'e', 'U+0065', '101', 'Б', 'U+0411', '1041', 'б', 'U+0431', '1073'],
+        ['0', 'U+0030', '48', 'C', 'U+0043', '67', 'k', 'U+006B', '107', 'К', 'U+041A', '1050', 'к', 'U+043A', '1082'],
+        ['9', 'U+0039', '57', 'M', 'U+004D', '77', 'n', 'U+006E', '110', 'Н', 'U+041D', '1053', 'н', 'U+043D', '1085'],
+        ['@', 'U+0040', '64', 'S', 'U+0053', '83', 's', 'U+0073', '115', 'С', 'U+0421', '1057', 'с', 'U+0441', '1089'],
+        ['-', 'U+002D', '45', 'Z', 'U+005A', '90', 't', 'U+0074', '116', 'Я', 'U+042F', '1071', 'я', 'U+044F', '1103']
+      ];
+      return `
+        <div class="uni-grid">
+          <div class="uni-title">Unicode кодтау кестесі (фрагмент)</div>
+          <div style="overflow-x:auto;">
+            <table class="dark-tbl">
+              <thead>
+                <tr>
+                  <th>Симв</th><th>Hex</th><th>Dec</th>
+                  <th>Симв</th><th>Hex</th><th>Dec</th>
+                  <th>Симв</th><th>Hex</th><th>Dec</th>
+                  <th>Симв</th><th>Hex</th><th>Dec</th>
+                  <th>Симв</th><th>Hex</th><th>Dec</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.map(r => `<tr>${r.map((c, idx) => `<td${idx % 3 === 0 ? ' style="font-weight:800;color:#fcd34d;"' : ''}>${c}</td>`).join('')}</tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+    }
+
+    function buildBlock13Excel() {
+      return `
+        <div class="xl-card">
+          <div class="xl-head"><span class="xl-pill">EXCEL</span><span>Деректер форматы (A1:F4)</span></div>
+          <table class="xl-tbl">
+            <thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr></thead>
+            <tbody>
+              <tr><td class="rn">1</td><td>Жалпыға</td><td class="hi">9 600 ₸</td><td></td><td class="tgt">36%</td><td></td><td></td></tr>
+              <tr><td class="rn">2</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td class="rn">3</td><td>саяхат</td><td></td><td>лагерь оқуға</td><td></td><td></td><td></td></tr>
+              <tr><td class="rn">4</td><td></td><td></td><td></td><td></td><td class="hi">65000</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    function buildBlock14Browser() {
+      return `
+        <div class="browser-mock">
+          <div class="browser-chrome">
+            <div class="browser-dots">
+              <span style="background:#ef4444;"></span>
+              <span style="background:#f59e0b;"></span>
+              <span style="background:#22c55e;"></span>
+            </div>
+            <div class="browser-tab">жоба</div>
+          </div>
+          <div class="browser-url">↻ &nbsp; file:///C:/projects/social_list.html</div>
+          <div class="browser-body">
+            <ol>
+              <li>Facebook</li>
+              <li>Instagram</li>
+              <li>WhatsApp</li>
+            </ol>
+          </div>
+        </div>`;
+    }
+
+    function buildBlock19VRAR() {
+      return `
+        <div class="vr-cards">
+          <!-- Card 1: VR Space -->
+          <div class="vr-card">
+            <svg viewBox="0 0 180 110" width="176" height="108" style="max-width:100%;height:auto;border-radius:10px;background:#091024;">
+              <circle cx="28" cy="20" r="1.5" fill="#fff"/><circle cx="145" cy="18" r="1.5" fill="#fff"/><circle cx="95" cy="14" r="1.2" fill="#7dd3fc"/>
+              <circle cx="144" cy="36" r="14" fill="#38bdf8" opacity="0.85"/>
+              <ellipse cx="144" cy="36" rx="24" ry="5" fill="none" stroke="#c084fc" stroke-width="2"/>
+              <circle cx="36" cy="38" r="9" fill="#6366f1" opacity="0.8"/>
+              <!-- Person with VR headset -->
+              <circle cx="88" cy="60" r="19" fill="#fdba74"/>
+              <path d="M 69 55 Q 88 33 107 55" fill="#1e293b"/>
+              <rect x="70" y="52" width="36" height="15" rx="5" fill="#f8fafc" stroke="#0f172a" stroke-width="2"/>
+              <rect x="74" y="55" width="28" height="9" rx="3" fill="#0f172a"/>
+              <path d="M 64 108 Q 88 76 112 108 Z" fill="#1e3a8a"/>
+              <rect x="115" y="64" width="38" height="24" rx="4" fill="rgba(56,189,248,0.18)" stroke="#38bdf8" stroke-width="1.3"/>
+              <polygon points="134,68 142,76 134,84 126,76" fill="none" stroke="#7dd3fc" stroke-width="1.3"/>
+              <circle cx="16" cy="16" r="10" fill="#2563eb"/><text x="16" y="20" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">1</text>
+            </svg>
+            <div class="vr-caption">Виртуалды шындық (VR)</div>
+            <div class="vr-sub">Толықтай жасанды ғарыш әлемі</div>
+          </div>
+
+          <!-- Card 2: AR Tablet Earth -->
+          <div class="vr-card">
+            <svg viewBox="0 0 180 110" width="176" height="108" style="max-width:100%;height:auto;border-radius:10px;background:#1e293b;">
+              <!-- Desk background -->
+              <rect x="0" y="76" width="180" height="34" fill="#78350f" opacity="0.55"/>
+              <!-- Tablet -->
+              <rect x="18" y="14" width="144" height="84" rx="9" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+              <rect x="24" y="20" width="132" height="72" rx="4" fill="#172554"/>
+              <!-- 3D Earth -->
+              <circle cx="62" cy="56" r="22" fill="#2563eb"/>
+              <path d="M 52 44 Q 60 40 68 48 Q 74 58 62 66 Q 50 64 52 44 Z" fill="#22c55e"/>
+              <ellipse cx="62" cy="81" rx="22" ry="4" fill="none" stroke="#38bdf8" stroke-width="1.2"/>
+              <!-- AR Info Cards -->
+              <rect x="92" y="24" width="60" height="19" rx="3" fill="#ffffff"/>
+              <text x="95" y="33" fill="#0f172a" font-size="7" font-weight="800">Жер</text>
+              <text x="95" y="40" fill="#475569" font-size="5">3-ші планета</text>
+              <rect x="92" y="47" width="60" height="17" rx="3" fill="#ffffff"/>
+              <text x="95" y="54" fill="#475569" font-size="5">Диаметрі:</text>
+              <text x="95" y="61" fill="#0f172a" font-size="6.5" font-weight="800">12 742 км</text>
+              <rect x="92" y="68" width="60" height="17" rx="3" fill="#ffffff"/>
+              <text x="95" y="75" fill="#475569" font-size="5">Спутниктері:</text>
+              <text x="95" y="82" fill="#0f172a" font-size="6.5" font-weight="800">1 (Ай)</text>
+              <circle cx="16" cy="16" r="10" fill="#2563eb"/><text x="16" y="20" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">2</text>
+            </svg>
+            <div class="vr-caption">Кеңейтілген шындық (AR)</div>
+            <div class="vr-sub">Нақты ортаға 3D Жер және мәлімет</div>
+          </div>
+
+          <!-- Card 3: VR Gaming Controllers -->
+          <div class="vr-card">
+            <svg viewBox="0 0 180 110" width="176" height="108" style="max-width:100%;height:auto;border-radius:10px;background:#0c1328;">
+              <!-- Sci-fi room lines -->
+              <line x1="0" y1="95" x2="180" y2="95" stroke="#1e3a8a" stroke-width="2"/>
+              <circle cx="145" cy="54" r="24" fill="none" stroke="#38bdf8" stroke-width="2.5" opacity="0.7"/>
+              <rect x="136" y="44" width="18" height="28" rx="4" fill="#334155" stroke="#7dd3fc" stroke-width="1.2"/>
+              <!-- Gamer with VR + controllers -->
+              <circle cx="48" cy="48" r="15" fill="#fdba74"/>
+              <rect x="46" y="41" width="22" height="12" rx="4" fill="#f8fafc" stroke="#0f172a" stroke-width="1.8"/>
+              <path d="M 28 108 Q 48 68 72 108 Z" fill="#1e293b"/>
+              <!-- Controllers & laser -->
+              <circle cx="88" cy="68" r="6" fill="none" stroke="#94a3b8" stroke-width="2.2"/>
+              <line x1="88" y1="74" x2="84" y2="88" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+              <line x1="94" y1="68" x2="134" y2="58" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="6,3"/>
+              <circle cx="16" cy="16" r="10" fill="#2563eb"/><text x="16" y="20" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">3</text>
+            </svg>
+            <div class="vr-caption">VR Ойын ортасы</div>
+            <div class="vr-sub">Гарнитура + контроллер арқылы ену</div>
+          </div>
+        </div>`;
+    }
+
+    function buildBlock20Tables() {
+      const hexRows = [
+        ['0','0000','0','0000'], ['1','0001','1','0001'], ['2','0010','2','0010'], ['3','0011','3','0011'],
+        ['4','0100','4','0100'], ['5','0101','5','0101'], ['6','0110','6','0110'], ['7','0111','7','0111'],
+        ['8','1000','8','1000'], ['9','1001','9','1001'], ['A','1010','10','1010'], ['B','1011','11','1011'],
+        ['C','1100','12','1100'], ['D','1101','13','1101'], ['E','1110','14','1110'], ['F','1111','15','1111']
+      ];
+      const symRows = [
+        ['0','00000'], ['1','00001'], ['E','00101'], ['T','10100'], ['K','01011'],
+        ['A','00011'], ['3','00010'], ['N','01110'], ['7','00111'], ['H','01000'], ['P','10000']
+      ];
+      return `
+        <div class="dual-tables">
+          <div class="uni-grid">
+            <div class="uni-title">Санау жүйелері кестесі (16 / 2 / 10)</div>
+            <table class="dark-tbl">
+              <thead><tr><th>16-лық</th><th>2-лік</th><th>10-дық</th><th>2-лік</th></tr></thead>
+              <tbody>
+                ${hexRows.map(r => `<tr><td style="color:#fcd34d;font-weight:800;">${r[0]}</td><td>${r[1]}</td><td style="color:#7dd3fc;font-weight:800;">${r[2]}</td><td>${r[3]}</td></tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+          <div class="uni-grid">
+            <div class="uni-title">Символдардың 2-лік коды</div>
+            <table class="dark-tbl">
+              <thead><tr><th>Символ</th><th>2-лік код</th></tr></thead>
+              <tbody>
+                ${symRows.map(r => `<tr><td style="color:#6ee7b7;font-weight:800;">${r[0]}</td><td>${r[1]}</td></tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+    }
+
+    const Q_VISUALS = {
+      349: buildNeuralNetSVG(),
+      481: buildSketchUpShapesSVG()
+    };
+
+    const BLOCK_VISUALS = {
+      5: buildBlock5Excel(),
+      12: buildBlock12Unicode(),
+      13: buildBlock13Excel(),
+      14: buildBlock14Browser(),
+      19: buildBlock19VRAR(),
+      20: buildBlock20Tables()
+    };
+
+    // =========================================================================
+    // 3. ALL 20 CONTEXT BLOCKS (405–503)
+    // =========================================================================
+    const CONTEXT_BLOCKS = [
+      {
+        id: 1, range: [405, 409], topic: 'sql',
+        title: 'Блок 1. PHP және MySQL байланыстыру',
+        text: 'PHP және MySQL байланыстыру үшін PHP скриптінде MySQL директоры мен деректер қорының атауын білу керек:\n1. Хост\n2. Деректер қорының атауы\n3. Пайдаланушының атауы\n4. ДҚ-ға кіру үшін құпия сөз\n5. SQL командалар',
+        code: "$servername = 'localhost';\n$username = 'root';\n$password = '';\n$database = 'base';\n$conn = mysqli_connect($servername, $username, $password, $database);"
+      },
+      {
+        id: 2, range: [410, 414], topic: 'python',
+        title: 'Блок 2. Тізім (Python)',
+        text: 'Python тізімі арқылы сандарды сақтап, олардың ішінен тек жұп сандарды сұрыптап шығаруға болады. Бұл үшін for циклі мен if шарты жиі қолданылады.',
+        code: 'numbers = [4, 7, 10, 15, 18, 21]\nfor num in numbers:\n    if num % 2 == 0:\n        print(num)'
+      },
+      {
+        id: 3, range: [415, 419], topic: 'python',
+        title: 'Блок 3. Python файлдардың 2 типі',
+        text: 'Python программалау тілінде файлдың 2 типі бар. Мәтіндік файлдарда адамға түсінікті символдар тізімі сақталады. Блокнот және басқа да стандартты мәтіндік редакторлар файлды оқып, түзете алады. Бинарлық файлда деректер кодталған формада көрініс табады.',
+        code: "my_file = open('file1.txt', 'r', encoding='utf-8')\nletter = 'a'\ncounter = 0\nfor line in my_file.readlines():\n    counter += line.count(letter)\nprint(f'{letter} әрпі {counter} рет кездеседі')"
+      },
+      {
+        id: 4, range: [420, 424], topic: 'python',
+        title: 'Блок 4. Армстронг саны',
+        text: 'Армстронг саны — бұл өз цифрларының санына тең дәрежеге көтерілген қосындысына тең болатын натурал сан.\nМысалы: 153 = 1³ + 5³ + 3³ = 1 + 125 + 27 = 153 (тағы мысалдар: 370, 371, 407).\nАл 120: 1³ + 2³ + 0³ = 9 ≠ 120, сондықтан Армстронг саны емес.\nPython-да len(str(n)) арқылы цифрлар саны табылып, әр цифр дәрежеленіп қосылады.',
+        code: ''
+      },
+      {
+        id: 5, range: [425, 429], topic: 'logic',
+        title: 'Блок 5. Excel кірістірілген функциялары',
+        text: 'Excel программасында 200-ден аса кірістірілген функция бар.\nМатематикалық: ABS() — модуль, КОРЕНЬ() — квадрат түбір, СУММ() — қосынды, СТЕПЕНЬ() — дәрежелеу.\nСтатистикалық: МАКС() — максимум, МИН() — минимум, СРЗНАЧ() — орташа мән, СЧЕТЕСЛИ() — шартқа сай аргументтер саны.',
+        code: ''
+      },
+      {
+        id: 6, range: [430, 434], topic: 'python',
+        title: 'Блок 6. Bubble Sort алгоритмі',
+        text: 'Bubble Sort — тізімді сұрыптаудың ең қарапайым әдісі. Көршілес элементтерді салыстырып, дұрыс реттелмесе орындарын ауыстырады. Әр айналымда ең үлкен элемент соңына жылжиды. Егер бірде-бір ауыстыру орын алмаса, алгоритм ерте тоқтайды.',
+        code: 'def bubble_sort(arr):\n    for n in range(len(arr) - 1, 0, -1):\n        swapped = False\n        for i in range(n):\n            if arr[i] > arr[i + 1]:\n                arr[i], arr[i + 1] = arr[i + 1], arr[i]\n                swapped = True\n        if not swapped:\n            break\narr = [6, 6, 2]\nbubble_sort(arr)\nprint(arr)'
+      },
+      {
+        id: 7, range: [435, 439], topic: 'python',
+        title: 'Блок 7. Фибоначчи сандары',
+        text: 'Фибоначчи сандары — әрбір келесі сан алдыңғы екі санның қосындысына тең болатын реттілік:\nF₁ = 1, F₂ = 1, Fₙ = Fₙ₋₁ + Fₙ₋₂ (n ≥ 3).\nБине формуласы: Fₙ = ((1 + √5)ⁿ − (1 − √5)ⁿ) / (2ⁿ · √5).',
+        code: ''
+      },
+      {
+        id: 8, range: [440, 444], topic: 'python',
+        title: 'Блок 8. Палиндром',
+        text: 'Берілген Python кодының мақсаты — жолдың палиндром екенін тексеру (солдан оңға және оңнан солға бірдей оқылса — палиндром).',
+        code: 's = input()\nrev = ""\nfor char in s:\n    rev = char + rev\nif s == rev:\n    print("Yes")\nelse:\n    print("No")'
+      },
+      {
+        id: 9, range: [445, 449], topic: 'web',
+        title: 'Блок 9. CSS стильдері',
+        text: 'CSS — HTML/XHTML веб-беттерінің сыртқы көрінісін (қаріп, түс, шегініс, блоктар) безендіру тілі.',
+        code: '\u003c!DOCTYPE html\u003e\n\u003chtml lang="en"\u003e\n\u003chead\u003e\n  \u003ctitle\u003eMenin web-paraksham\u003c/title\u003e\n  \u003cstyle\u003e\n    body { background-color: #f0f0f0; font-size: 16px; }\n    .description {\n      color: red; font-weight: bold;\n      width: 100vw; padding-top: 20px; margin: auto;\n    }\n  \u003c/style\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n  \u003cdiv class="main_box"\u003e\n    \u003ch1\u003eБұл CSS қолданылған web-парақша\u003c/h1\u003e\n    \u003cp class="description"\u003eCSS - стильдерді басқаруға мүмкіндік береді\u003c/p\u003e\n  \u003c/div\u003e\n\u003c/body\u003e\n\u003c/html\u003e'
+      },
+      {
+        id: 10, range: [450, 453], topic: 'python',
+        title: 'Блок 10. Күрделі пайыз',
+        text: 'Күрделі пайыз — негізгі салымға әр кезең сайын есептеліп қосылатын пайыз.\nМысалы: 100 тг, 10% жылдық: 1-жыл = 110 тг, 2-жыл = 121 тг (өсім CI = 21 тг).\nФормула: A = P · (1 + R/100)^T; CI = A − P.',
+        code: 'def compoundInterest(principal, rate, time):\n    # Amount = ...\n    CI = Amount - principal\n    print(CI)\nprincipal = int(input())\nrate = int(input())\ntime = int(input())\ncompoundInterest(principal, rate, time)'
+      },
+      {
+        id: 11, range: [454, 458], topic: 'sql',
+        title: 'Блок 11. Students және Enrollments кестелері',
+        text: 'Берілген SQL кодында Students (оқушылар), Courses (курстар) және Enrollments (байланыс) кестелері құрылып, деректер енгізіледі.',
+        code: "CREATE TABLE Students (\n  id INT PRIMARY KEY, first_name VARCHAR(255),\n  last_name VARCHAR(255), age INT, grade INT\n);\nCREATE TABLE Courses (id INT PRIMARY KEY, course_name VARCHAR(255));\nCREATE TABLE Enrollments (\n  id INT PRIMARY KEY, student_id INT, course_id INT,\n  FOREIGN KEY (student_id) REFERENCES Students(id),\n  FOREIGN KEY (course_id) REFERENCES Courses(id)\n);\nINSERT INTO Students VALUES (1,'Ayan','Sultan',14,8),(2,'Dina','Omarova',15,9),(3,'Miras','Aliev',14,8);\nINSERT INTO Courses VALUES (1,'Informatics'),(2,'Mathematics'),(3,'English');\nINSERT INTO Enrollments VALUES (1,1,1),(2,1,2),(3,2,1),(4,2,3),(5,3,2),(6,3,3);"
+      },
+      {
+        id: 12, range: [459, 463], topic: 'logic',
+        title: 'Блок 12. Unicode кодтау кестесі',
+        text: 'Компьютер жадында әр символға бірегей код беріледі. Unicode жүйесі көптеген тілдердің таңбаларын сақтауға мүмкіндік береді (UTF-8, UTF-16, UTF-32). UTF-16 жүйесінде бір символ 16 битпен беріледі.',
+        code: ''
+      },
+      {
+        id: 13, range: [464, 468], topic: 'logic',
+        title: 'Блок 13. Деректер форматы (Excel)',
+        text: 'Электрондық кестеде ұяшықтар мәтіндік, сандық, пайыздық, күн-ай және формулалық форматтарда болуы мүмкін. Формат мәліметтің кестеде қалай көрсетілетінін анықтайды.',
+        code: ''
+      },
+      {
+        id: 14, range: [469, 473], topic: 'web',
+        title: 'Блок 14. Әлеуметтік Желілер (HTML тізім)',
+        text: 'Төмендегі браузер терезесінің үлгісіне қарап, HTML тізім тегтері мен атрибуттары бойынша сұрақтарға жауап беріңіз.',
+        code: ''
+      },
+      {
+        id: 15, range: [474, 478], topic: 'security',
+        title: 'Блок 15. Компьютерлік вирустар',
+        text: 'Компьютерлік вирус — компьютерге зиян келтіруге, ақпаратты өзгертуге, жоюға немесе программалар жұмысын бұзуға арналған шағын программа.\nРезиденттік вирустар жедел жадта сақталып, үнемі белсенді болады. Резиденттік емес вирустар жадта тұрақты сақталмайды, файл іске қосылғанда ғана әрекет етеді.',
+        code: ''
+      },
+      {
+        id: 16, range: [479, 483], topic: 'ai',
+        title: 'Блок 16. 3D модельдеу және SketchUp',
+        text: '3D модельдеу — нысанның үш өлшемді кеңістіктегі бейнесін құру. SketchUp-та алдымен қарапайым фигуралар салынып, кейін көлем, материалдар мен стильдер беріледі. Алғаш @Last Software жасап, кейін Google сатып алған.',
+        code: ''
+      },
+      {
+        id: 17, range: [484, 488], topic: 'web',
+        title: 'Блок 17. HTML құжаты',
+        text: 'HTML — веб-беттерді тегтер арқылы белгілеу тілі (.htm / .html). Барлық тегтер \u003c символынан басталып, \u003e символымен аяқталады.',
+        code: '\u003c!DOCTYPE html\u003e\n\u003chtml lang="en"\u003e\n\u003chead\u003e\n  \u003cmeta charset="UTF-8"\u003e\n  \u003cmeta name="viewport" content="width=device-width, initial-scale=1.0"\u003e\n  \u003ctitle\u003eDocument\u003c/title\u003e\n\u003c/head\u003e\n\u003cbody style="font-size: 40px;"\u003e\n  \u003ch1 style="border: 2px solid black;"\u003eМенің алғашқы web-парақшам\u003c/h1\u003e\n  \u003ca href="http://wikipedia.com" target="_blank"\u003eКөбірек оқу\u003c/a\u003e\n  \u003cimg src="./wiki.jpeg" alt="wikipedia"\u003e\n\u003c/body\u003e\n\u003c/html\u003e'
+      },
+      {
+        id: 18, range: [489, 493], topic: 'python',
+        title: 'Блок 18. Сызықтық іздеу',
+        text: 'Сызықтық іздеу — ізделетін элементті массивтің басынан бастап біртіндеп тексеру алгоритмі. Әсіресе сұрыпталмаған тізімдерде қолданылады. Табылса индексін, табылмаса -1 қайтарады.',
+        code: 'def linearSearch(arr, target):\n    for i in range(len(arr)):\n        if arr[i] == target:\n            return i\n    return -1\narr = [5, 8, 2, 9, 3]\ntarget = 9\nindex = linearSearch(arr, target)\nif index != -1:\n    print("Табылды, индексі -", index)\nelse:\n    print("Табылмады")'
+      },
+      {
+        id: 19, range: [494, 498], topic: 'ai',
+        title: 'Блок 19. Үйлесімді модель — VR және AR',
+        text: 'Виртуалды шындық (VR) — техникалық құралдар арқылы жасалатын, пайдаланушы толықтай енетін жасанды әлем.\nКеңейтілген шындық (AR) — нақты әлемді нақты уақыт режимінде 3D объектілермен және қосымша мәліметтермен толықтырады.',
+        code: ''
+      },
+      {
+        id: 20, range: [499, 503], topic: 'logic',
+        title: 'Блок 20. Деректерді ұсыну. Санау жүйесі',
+        text: 'Санау жүйесі — сандарды цифрлық таңбалар арқылы жазу мен оқу тәсілдерінің жиынтығы. Төмендегі кестелерді пайдаланып сұрақтарға жауап беріңіз.',
+        code: ''
+      }
+    ];
+
+    const BLOCK_MAP = {};
+    CONTEXT_BLOCKS.forEach(b => { BLOCK_MAP[b.id] = b; });
+
+    const TOPIC_META = {
+      python:   { label: '🐍 Python & Алгоритм' },
+      sql:      { label: '🗄️ SQL & Деректер қоры' },
+      web:      { label: '🌐 HTML & CSS' },
+      network:  { label: '📡 Желі & Телеком' },
+      security: { label: '🛡️ Қауіпсіздік' },
+      hardware: { label: '⚙️ Архитектура' },
+      logic:    { label: '📊 Логика, Excel, Санау' },
+      ai:       { label: '🤖 ЖИ, Графика, VR/AR' }
+    };
+
+    // =========================================================================
+    // 4. ALL 162 QUESTIONS (342 TO 503) WITH 100% VERIFIED ANSWERS
+    // Format: [id, blockId(0=closed), ans(0-3), topic, q, code, [A,B,C,D]]
+    // =========================================================================
+    const RAW_QUESTIONS = [
+      // CLOSED QUESTIONS: 342–404 (63 questions)
+      [342, 0, 0, 'ai', 'Компьютердегі видеолар мен дыбыстық файлдарды монтаждауға мүмкіндік беретін құралдар жинағын қамтитын компьютерлік программа', '', ['видеоредактор', 'цифрлық видеокамера', 'видеоконтент', 'видеомонтаж']],
+      [343, 0, 2, 'ai', 'Бір түстен біртіндеп екінші түске ауысу командасы', '', ['түс температурасы', 'тон', 'градиент', 'контраст']],
+      [344, 0, 3, 'python', 'Программаға 4 және 6 сандары берілген кезде алынатын нәтиже:', 'a = int(input())\nb = int(input())\nk = 0\nif a % 2 == 0:\n    if b % 2 == 1:\n        k = a * b\n    else:\n        k = a + b\nprint(k)', ['20', '24', '9', '10']],
+      [345, 0, 0, 'logic', 'Ақпараттың көлемін анықтауға арналған I = K · i формуласындағы K шамасы', '', ['ақпараттағы символ саны', 'алфавиттің қуаттылығы', 'ақпарат көлемі', 'әр символдың салмағы']],
+      [346, 0, 0, 'ai', 'Графикалық объектілер кесінділер, векторлар, нүктелердің жиынтығы ретінде салынатын графика', '', ['векторлық', 'көпөлшемді', 'үшөлшемді', 'растрлық']],
+      [347, 0, 0, 'ai', 'Фотосуреттер мен бейнелерді сақтауға қолданылатын танымал графикалық формат', '', ['JPEG', 'TIFF', 'GIF', 'BMP']],
+      [348, 0, 1, 'security', 'Вирус жұққан программалар мен дискілерді "вирустан" өшіру арқылы емдеп, оларды бастапқы қалпына келтіретін программа түрі', '', ['сүзгі программалар', 'доктор программалар', 'детектор программалар', 'ревизор программалар']],
+      [349, 0, 3, 'ai', 'Сызбада көрсетілген нейрондық желі түрі:', '', ['бірқабатты және бір бағытты желі', 'көпқабатты және рекурентті желі', 'бірқабатты және көпқабатты желі', 'көпқабатты және бір бағытты желі']],
+      [350, 0, 2, 'python', 'Программаға 9, 4, 14, 2, 0 сандары берілгенде алынатын нәтиже:', 'N = 5\nz = 0\nfor i in range(1, N + 1):\n    x = int(input())\n    if x % 10 == 4:\n        z += 1\nprint(z)', ['5', '1', '2', '6']],
+      [351, 0, 2, 'hardware', 'Сандық ақпаратты таратуда байланыстырушы ретінде пайдаланылатын өткізгіштер тобы', '', ['командалар регистрі', 'сумматор', 'шина', 'командалар есептеуіші']],
+      [352, 0, 2, 'logic', 'Ұяшықтағы формуланы программа дұрыс анықтай алмай, "#Пусто!" қатесін шығарды, себебі', '', ['нөлге бөлу берілген', 'қате аргумент немесе оператор енгізілген', 'қиылыспайтын ұяшықтар аймағы көрсетілген', 'мүмкін емес мән көрсетілген']],
+      [353, 0, 2, 'hardware', '"Компьютердің атасы" аталған ағылшын ғалымы', '', ['А. Лавлейс', 'Б. Паскаль', 'Ч. Бэббидж', 'В. Шиккард']],
+      [354, 0, 0, 'logic', '156₁₀ санының екілік жүйедегі мәні', '', ['10011100₂', '10101111₂', '11001111₂', '10011101₂']],
+      [355, 0, 0, 'logic', '(A ∨ B) ∧ (¬A ∨ B) логикалық өрнегі үшін құрылған ақиқат кестесінің соңғы бағанындағы "жалған" пікірлер саны', '', ['2', '0', '3', '4']],
+      [356, 0, 3, 'python', 'Программаға 20 және 10 сандары берілгенде алынатын нәтиже:', 'a, b = map(int, input().split())\nif a < 1 or a > b:\n    b %= 3\nif a // 8 == 2 and 2 >= b:\n    b //= 1\nprint(b)', ['3', '-1', '0', '1']],
+      [357, 0, 3, 'web', 'HTML-де белсенді сілтеменің, яғни тінтуір көрсетіп тұрған сілтеме түсін анықтайды', '', ['blink', 'link', 'vlink', 'alink']],
+      [358, 0, 0, 'logic', '138₁₀ санының екілік жүйедегі мәні', '', ['10001010₂', '10111101₂', '11100101₂', '10100111₂']],
+      [359, 0, 3, 'network', 'Электрондық поштаны жіберу үшін қолданылатын хаттама', '', ['HTTP', 'FTP', 'POP3', 'SMTP']],
+      [360, 0, 2, 'security', 'Ақпаратты кілтсіз кері шифрлау', '', ['асимметриялық шифрлау', 'криптограмма', 'криптоанализ', 'симметриялық шифрлау']],
+      [361, 0, 2, 'hardware', 'II буын компьютерлерінің пайдаланушымен байланыс құралдары', '', ['монохромды графикалық дисплей', 'басқару пульті мен перфотаспа', 'алфавиттік-цифрлық терминал', 'перфокарталар мен перфотаспалар']],
+      [362, 0, 1, 'python', 'Екі жол үшін қосу амалы', '', ['биттік терістеу', 'конкатенация', 'инкремент', 'декремент']],
+      [363, 0, 3, 'python', 'Программаның орындалуы аяқталған соң, x айнымалысының мәні:', 'i = j = x = 0\nfor i in range(1, 6):\n    for j in range(i + 1, 6):\n        x += 1\nprint(x)', ['8', '2', '4', '10']],
+      [364, 0, 2, 'sql', 'Деректерді сақтау бойынша деректер базасының түрлері', '', ['реляциялық және реляциялық емес', 'фактографиялық және құжаттық', 'ортақтандырылған және таратылған', 'статикалық және динамикалық']],
+      [365, 0, 1, 'hardware', 'Ойын бағдарламасын жүйесіне жабдықталған мобильді құрылғы', '', ['презентация', 'смартфон', 'микшер', 'стилус']],
+      [366, 0, 2, 'network', 'Интернет кеңістігіндегі сайттың символдар мен сандардан тұратын адресі', '', ['пошта', 'аккаунт', 'домен', 'браузер']],
+      [367, 0, 0, 'ai', 'Суперпозиция негізіндегі кеңейтілген шындық түсінігі', '', ['нақты уақыт режимінде қосымша элементтермен толықтыру, объектілерді тану', 'белгілі бір виртуалды объектіні таңдау және сол объект туралы керекті ақпаратты береді', 'экран бетіндегі 3D үлгідегі сурет адаммен өзара әрекеттесе алады', 'орналасқан жерге байланысты виртуалды суреттер мен жол сілтемелері пайда болады']],
+      [368, 0, 0, 'network', 'Workspace as a Service моделінің қызметі', '', ['жұмыс ортасын құру және ұсыну', 'мониторингтеу және қауіпсіздікті қамтамасыз ету', 'бұлттық сервис мәнеріндегі программалармен жұмыс істеу', 'виртуализация технологиясын пайдалана отырып, жабдықтың есептеу ресурстарын ұсыну']],
+      [369, 0, 3, 'network', 'Компьютердің MAC адресі', '', ['fe80::8803:6a89:a35:8744', '192.168.31.51', '192.168.6.11', '6C-4B-90-6C-4F-E2']],
+      [370, 0, 0, 'security', 'Статикалық және динамикалық деп бөлуге болатын ақпараттық қауіпсіздік қаупі', '', ['тұтастығы', 'құпиялылығы', 'қолжетімділігі', 'өзектілігі']],
+      [371, 0, 0, 'ai', 'Ашық үкімет порталында өңірлік жағдайлар, заң жобалары, мемлекеттік қызметтер стандарттарының жобалары және рұқсат беру құжаттарын талқылауға арналған бірыңғай алаң', '', ['ашық НҚА', 'ашық диалог', 'ашық бюджеттер', 'ашық деректер']],
+      [372, 0, 0, 'ai', 'Құрылымның ішкі сипаттамасы мен ерекшеліктерін көрсететін инфографика', '', ['схемалық', 'статистикалық', 'иерархия', 'матрицалық']],
+      [373, 0, 1, 'network', 'Желілік құрылғылар', '', ['принтер, желілік адаптер, микрофон', 'коммутатор, шлюз, бағдарлауыш (router)', 'бағдарлауыш (router), сканер, коммутаторлар', 'желілік түйін, бағдарлауыш, модем, коммутаторлар']],
+      [374, 0, 3, 'ai', 'Мобильді қосымша интерфейсінде тізімді қосымша құру үшін қолданылатын элементтер', '', ['командалық басқару элементтері', 'бейнелеу элементтері', 'енгізу элементтері', 'таңдау элементтері']],
+      [375, 0, 0, 'ai', '«Цифрлық Қазақстан» мемлекеттік бағдарламасында озық технологиялардың мүмкіндіктерін пайдалана отырып, экономика салаларындағы капиталдандыруды өсіру бағыты', '', ['экономика салаларын цифрландыру', 'цифрлық Жібек жолын іске асыру', 'цифрлық мемлекетке өту', 'адами капиталды дамыту']],
+      [376, 0, 0, 'logic', 'Ондық санау жүйесіндегі 125 санын сегіздік санау жүйесіне ауыстыру', '', ['125₁₀ = 175₈', '125₁₀ = 167₈', '125₁₀ = 165₈', '125₁₀ = 157₈']],
+      [377, 0, 0, 'ai', 'Қазақстанда цифрлық технологияларды қолдану арқылы экономика салаларындағы капиталдандыруды өсіру бағыты', '', ['экономика салаларын цифрландыру', 'цифрлық Жібек жолын іске асыру', 'цифрлық мемлекетке өту', 'адами капиталды дамыту']],
+      [378, 0, 3, 'ai', 'Краудфандинг жинау қызметінің дұрыс реті', '', ['қаржы қажеттілігі - экономикалық талдау - краудфандинг үшін алаң таңдау - статистика', 'компанияның жабылуы - жоба жоспары - краудфандинг үшін алаң таңдау', 'қаржы қажеттілігі - жоба жоспары - краудфандинг үшін алаң таңдау - кампанияның жабылуы', 'жоба жоспары - платформа - қаржы жинау - кампанияның жабылуы']],
+      [379, 0, 3, 'ai', 'Алгоритмдік модель құрылымындағы соңғы блок', '', ['аралық', 'жасырын', 'кіріс', 'шығыс']],
+      [380, 0, 2, 'ai', 'Crowdfunding ұғымының анықтамасы', '', ['платформалардың ережесі бойынша қатысушылардың барлық көмегін жазатын құрал', 'кез келген адам өз жобасын тіркеп, қаражат жинай алатын жүйе', 'көптеген ниет білдірушілерден белгілі бір жобаны қаржыландыру үшін қаражат алудың бір түрі', 'стартапты жүзеге асыруға кіріскендердің алдында кездесетін маңызды мәселелердің бірі']],
+      [381, 0, 3, 'sql', 'PHP-де деректер қорымен байланыс орнатуға арналған функция', '', ['db_connect()', 'mysql_db()', 'connect()', 'mysql_connect()']],
+      [382, 0, 0, 'web', 'Сатып алушыларды сатып алуға түрткі болатын безендірілген ақпарат, оны сайттың алдыңғы қатарында орналастырады', '', ['жарнамалық тақырып', 'мәтіндік батырмалар', 'қолжетімді ақпарат', 'фотосуреттер']],
+      [383, 0, 0, 'security', 'Ақпараттық қауіпсіздіктің негізгі қасиеттері', '', ['қолжетімділік, тұтастық, құпиялылық', 'біртектілік, тұтастық, құпиялылық', 'қолжетімділік, тұтастық, уақыт', 'қолжетімділік, нақтылық, құпиялылық']],
+      [384, 0, 3, 'sql', 'Автоматты операцияларды жүргізгенде өрістерді анықтау қасиеті', '', ['өріс мөлшері', 'өріс форматы', 'өріс аты', 'өріс типі']],
+      [385, 0, 2, 'network', 'Желі қосымшалары', '', ['Windows, Novell NetWare, Unix', 'компьютерлер, маршрутизаторлар, байланыс арналары', 'желілік мәліметтер базасы, пошта жүйесі, автоматтандыру жүйелері', 'желілік принтер, желілік диск, мәліметтер базасы']],
+      [386, 0, 3, 'web', 'Қолданылатын web-беттердің мәтіндік, бейнелік негізінде жасалынатын платформа', '', ['конструктор', 'генератор', 'native', 'гибрид']],
+      [387, 0, 3, 'ai', 'Microsoft Image Composite Editor-де жасалған панорамалық кескінді таңдалған сфералық, цилиндрлік, жазықтық, т.б. тәсілдерге сала өзгерту батырмасы', '', ['Angular', 'Structure', 'Quality', 'Projection']],
+      [388, 0, 1, 'ai', 'Көпқабатты нейрондық желілерді тереңдетіп оқыту архитектурасы', '', ['QuickDrive', 'DeepLearning', 'Smart City', 'Blockchain']],
+      [389, 0, 2, 'security', 'Интеллектуалдық меншікке қатысты құқықтық қатынастарды реттейтін құқық саласы', '', ['биліктік құқық', 'лицензиялау', 'авторлық құқық', 'азаматтық құқық']],
+      [390, 0, 3, 'network', 'Қызметтерді пайдалануды қамтамасыз ететін компьютер', '', ['компьютерлік желі', 'клиент', 'модем', 'сервер']],
+      [391, 0, 1, 'sql', 'Негізгі кестенің бір жазбасына бағынышты кестенің бір жазбасы ғана сәйкес келетін байланыс түрі', '', ['бірден көпке байланысы', 'бірге-бір байланысы', 'көптің бірге байланысы', 'көптің көпке байланысы']],
+      [392, 0, 1, 'network', 'Желі ішінде жұмыс істеу үшін желілік адаптерлердің түрлері', '', ['класстар және адрестер', 'сымды және сымсыз', 'аппараттық және ақпараттық', 'жоғары және төмен']],
+      [393, 0, 2, 'security', 'Ұйымның қауіпсіздік саясаты және байланыс арналарына қатысты барлық бақылауды іске асыру бойынша ақпаратты қорғау шарасы', '', ['технологиялық', 'программалық', 'ұйымдастырушылық', 'резервтік көшірме']],
+      [394, 0, 3, 'logic', '714₈ санын ондық санау жүйесіне ауыстыру', '', ['470₁₀', '453₁₀', '413₁₀', '460₁₀']],
+      [395, 0, 3, 'network', '1 байтты құрайтын 8 разряд', '', ['провайдер', 'түйін', 'маска', 'октет']],
+      [396, 0, 0, 'network', 'Мониторингтеу және қауіпсіздікті қамтамасыз ету үшін бұлтты программалық қамтамасыздандыру қызмет түрі', '', ['MaaS', 'HaaS', 'DaaS', 'WaaS']],
+      [397, 0, 2, 'ai', 'Ашық үкімет порталында мемлекеттік органдардың ашық лицензиялармен жарияланатын ақпараттық жиынтықтары', '', ['ашық НҚА', 'ашық бюджеттер', 'ашық деректер', 'ашық диалог']],
+      [398, 0, 2, 'web', 'Сұрақ-жауап формасын құруға, электрондық пошта, әлеуметтік желі арқылы бөлісуге, веб-сайтқа немесе блогқа қоюға мүмкіндік беретін онлайн қызмет', '', ['Google күнтізбе', 'Google құжат', 'Google форма', 'Google диск']],
+      [399, 0, 0, 'security', 'Ақпарат тұтастығының жоғары қауіптерінің бөліну саны', '', ['2', '6', '3', '4']],
+      [400, 0, 1, 'sql', 'Деректер қорын басқару жүйесінде деректердің орналасуына байланысты модельдер', '', ['бұлттық, желілік, реляциялық', 'иерархиялық, желілік, реляциялық', 'кестелік, желілік, мәтіндік', 'иерархиялық, жолдық, мәтіндік']],
+      [401, 0, 3, 'ai', 'Цифрлық видео', '', ['видеодеректерді цифрлық түрде жазуға және сақтауға арналған редактор', 'растрлық графиктік видеокескіннің бір пикселін кодтау тәсілі', 'фотосуреттер мен видеороликтерді сақтауға арналған орын', 'кескіндер мен дыбыстарды жазуға, өңдеуге, тасымалдауға арналған жиынтық']],
+      [402, 0, 3, 'ai', 'Түрлі сценарийлерге қатысты бейнеклиптерді өңдеу барысында дыбыстар, суреттер, әсерлер мен өтулер, мәтін қосу', '', ['дыбыстық сүйемелдеу', 'бейнежазбаны дыбыстау', 'бейнені экспорттау', 'бейнені монтаждау']],
+      [403, 0, 2, 'network', 'Құрамында көптеген функционалдық мүмкіндіктері орналасқан, мобильді GSM сигналын қабылдау және беру құрылғысы', '', ['жедел тақша', 'архитектуралық модуль', 'қабылдағыш-таратқыш', 'антенна']],
+      [404, 0, 1, 'security', 'Ақпаратты кілтсіз кері шифрлау мақсатымен айналысатын криптологияның бөлімі', '', ['криптошифрлау', 'криптоанализ', 'криптовалюта', 'криптография']],
+
+      // BLOCK 1 (405–409)
+      [405, 1, 0, 'sql', 'PHP-да айнымалылар басталатын символ', '', ['$', '\u003c?', '#', '\u003cHTML\u003e \u003c/HTML\u003e']],
+      [406, 1, 0, 'sql', 'PHP-да кодты ажыратып отыратын символ', '', [';', '\u003cHTML\u003e \u003c/HTML\u003e', '\u003c?', '$']],
+      [407, 1, 1, 'sql', 'Пайдаланушының аты (берілген код бойынша)', '', ['localhost', 'root', 'base', 'conn']],
+      [408, 1, 2, 'sql', 'Деректер қорын қосу үшін пайдаланатын функция', '', ['mysqli_select', 'mysqli_query', 'mysqli_connect', 'mysqli_close']],
+      [409, 1, 1, 'sql', 'PHP жазылған программа қолданылатын сервер түрін анықтаңыз', '', ['прокси', 'жергілікті', 'бұлтты', 'қашықтық']],
+
+      // BLOCK 2 (410–414)
+      [410, 2, 2, 'python', 'Барлық жұп сандарды бір жаңа тізімге сақтайды:', '', ['new = nums.sort(i % 2 == 0)', 'new = nums[i % 2 == 0]', 'new = [i for i in nums if i % 2 == 0]', 'new = nums.append(i % 2 == 0)']],
+      [411, 2, 3, 'python', 'Төмендегі код экранға шығарады:', 'nums = [2, 5, 8, 11, 14]\nfor i in nums:\n    if i % 2 == 0:\n        print(i * 2)', ['2 5 8', '4 10 16', '2 8 14', '4 16 28']],
+      [412, 2, 0, 'python', 'Төмендегі код барлық жұп сандарды басып шығармайды, себебі:', 'numbers = [2, 4, 6, 8, 10]\nfor i in range(len(numbers)):\n    if i % 2 == 0:\n        print(numbers[i])', ['Шарт мәнге емес, позицияға қатысты', 'Тек тақ индекстер ғана тексеріледі', 'i тек индекске сілтеме жасайды', 'Барлық жұп сандар ғана дұрыс шығады']],
+      [413, 2, 2, 'python', 'Тек жұп сандарды ғана шығару үшін бос орындарды толтырыңыз:', 'for i in lst:\n    if ___:\n        print(i)', ['i == 2', 'i * 2 == 0', 'i % 2 == 0', 'i / 2 == 1']],
+      [414, 2, 3, 'python', 'Бұл код экранға шығарады:', 'lst = [10, 9, 8, 7, 6, 5]\nfor i in lst:\n    if i % 2 != 0:\n        continue\n    print(i)', ['5 7 9', '10 9 8', '9 7 5', '10 8 6']],
+
+      // BLOCK 3 (415–419)
+      [415, 3, 2, 'python', 'Бинарлық файлдармен жұмыс жасауға арналған open() функциясының режимі:', '', ['a', 'w', 'b', 'r']],
+      [416, 3, 2, 'python', 'Бастапқы кодта file1.txt файлының ашылу режимі:', '', ['оқу және жазу үшін', 'жаңа мазмұн қосу үшін', 'тек оқу үшін', 'тек жазу үшін']],
+      [417, 3, 3, 'python', "Бастапқы кодтағы төртінші жолға my_file.write('Мен мектепке барамын') жолын қосқаннан кейінгі нәтиже:", '', ['файлдың ішіндегі мәтінге «Мен мектепке барамын» мәтінін қосады', '«Мен мектепке барамын» мәтініндегі «а» әріптерін санайды', 'файлдың ішіндегі мәтінді жояды және «Мен мектепке барамын» мәтінін файлға жазады', 'қателікке алып келеді']],
+      [418, 3, 0, 'python', 'count() әдісінің қызметі', '', ['мәтіндегі нақты таңбаны іздейді', 'таңбаны іздейді және санын анықтайды', 'төменгі регистрге түрлендіреді', 'жоғарғы регистрге түрлендіреді']],
+      [419, 3, 1, 'python', 'File1.txt файлының ішінде «Ақпан - қыс мезгілінің соңғы айы» мәтіні болғанда, программаның нәтижесі:', '', ['а әрпі 4 рет кездеседі', 'а әрпі 3 рет кездеседі', 'а әрпі 5 рет кездеседі', 'а әрпі 0 рет кездеседі']],
+
+      // BLOCK 4 (420–424)
+      [420, 4, 0, 'python', 'Берілген функция орындалғанда экранға шығады:', 'def is_armstrong(n):\n    s = n\n    b = len(str(n))\n    sum1 = 0\n    while n != 0:\n        r = n % 10\n        sum1 += r ** b\n        n = n // 10\n    return s == sum1\nprint(is_armstrong(407))', ['True', '407', '10', 'False']],
+      [421, 4, 2, 'python', 'Армстронг саны дегеніміз:', '', ['Барлық цифрлары бірдей сан', 'Цифрларының көбейтіндісі өзіне тең сан', 'Цифрларының дәрежелік қосындысы өзіне тең сан', 'Цифрларының квадраттарының қосындысы өзіне тең сан']],
+      [422, 4, 1, 'python', 'Төмендегі программа дұрыс орындалмайды, себебі:', 'for n in range(100, 1000):\n    s = n\n    b = len(str(n))\n    sum1 = 0\n    while n != 0:\n        r = n % 10\n        sum1 += r ** b\n        n //= 10\n    if s == sum1:\n        print(s)', ['n айнымалысының бастапқы мәні берілмеген', 'n айнымалысы циклы ішінде өзгеріп кетеді, сондықтан цифрларды тексеруде бастапқы мән бөлек сақталуы керек', 'n айнымалысы қате жазылған', 'n айнымалысы болмау қажет']],
+      [423, 4, 0, 'python', 'Армстронг санын есептеуде қате жіберілген жол:', '', ['sum1 = sum1 + r * b', 'sum1 = r * b', 'sum1 == 1', 'sum1 - r * b = 0']],
+      [424, 4, 1, 'python', 'Армстронг санын тексеретін функцияның соңғы жолы:', 'def is_armstrong(n):\n    s = n\n    b = len(str(n))\n    sum1 = 0\n    while n != 0:\n        r = n % 10\n        sum1 += r ** b\n        n //= 10\n    # ???', ['return sum1', 'return s == sum1', 'return = sum1 + 10', 'return s == 0 * 10']],
+
+      // BLOCK 5 (425–429)
+      [425, 5, 0, 'logic', 'B3 ұяшығына тиісті формула:', '', ['=СТЕПЕНЬ(C2, 2)', '=КОРЕНЬ(C2, 2)', '=СУММ(C2, 2)', '=СТЕПЕНЬ(2, C2)']],
+      [426, 5, 0, 'logic', 'Сілтеменің адресі өзгермейтін абсолютті адрестеуге арналған белгі:', '', ['$', '%', '!', '#']],
+      [427, 5, 2, 'logic', 'С5 ұяшығына =СУММ("C2") формуласын енгізгеннен кейінгі мәні:', '', ['625', '60', '#ЗНАЧ!', '13']],
+      [428, 5, 1, 'logic', 'СТЕПЕНЬ() функциясының аргументтері:', '', ['СТЕПЕНЬ(степень; число)', 'СТЕПЕНЬ(число; степень)', 'СТЕПЕНЬ(число; степень; формат)', 'СТЕПЕНЬ(диапазон; степень)']],
+      [429, 5, 1, 'logic', 'C6 ұяшығына тиісті формула', '', ['=МИН(ПСТР(C2;1;1); ПСТР(C2;1;2); ПСТР(C2;1;3))', '=МИН(ПСТР(C2;1;1); ПСТР(C2;2;1); ПСТР(C2;3;1))', '=МИН(C2)', '=МИН(ЗНАК(C2); ЗНАК(C2); ЗНАК(C2))']],
+
+      // BLOCK 6 (430–434)
+      [430, 6, 2, 'python', 'Алгоритм жұмысын ерте аяқтайды, егер', '', ['барлық элементтер бірдей болса', 'ең үлкен элемент соңында болса', 'бір де бір ауыстыру орын алмаса', 'ең кіші элемент бірінші орында болса']],
+      [431, 6, 0, 'python', 'swapped — False күйінде қала береді, егер', '', ['барлық элементтер өспелі ретпен орналасқан болса', 'соңғы элемент ең үлкен болса', 'барлық элементтер кему ретімен орналасқан болса', 'бір ғана ауыстыру орындалса']],
+      [432, 6, 2, 'python', 'Келесі тізім ([6, 6, 2]) үшін жасалатын ауыстыру саны', '', ['3', '0', '2', '1']],
+      [433, 6, 2, 'python', 'range(len(arr) - 1, 0, -1) жолын пайдалану себебі', '', ['ауыстыру санын көбейту үшін', 'алдыңғы элементтерді ғана салыстыру үшін', 'сұрыпталмаған бөлікті азайту үшін', 'әр айналымда соңғы элементті өткізіп жіберу үшін']],
+      [434, 6, 3, 'python', 'Программаға [7, 7, 7, 7] түріндегі тізім берілсе', '', ['ауыстыру көп болады', 'барлық элементтер жойылады', 'алгоритм шексіз орындалады', 'ауыстыру болмайды']],
+
+      // BLOCK 7 (435–439)
+      [435, 7, 1, 'python', 'Фибоначчи қатарының алғашқы 5 мүшесі', '', ['1, 2, 3, 5, 7', '1, 1, 2, 3, 5', '1, 0, 1, 1, 2', '1, 1, 1, 2, 3']],
+      [436, 7, 3, 'python', 'Фибоначчи сандар қатары анықталады', '', ['әр сан тек тақ сандардан тұрады', 'әр сан 3-алдыңғы санға тең', 'әр сан алдыңғы екі санның көбейтіндісі', 'әр сан алдыңғы екі санның қосындысы']],
+      [437, 7, 3, 'python', 'Келесі программа мақсаты:', 'def fib(n):\n    a, b = 1, 1\n    for i in range(n - 2):\n        a, b = b, a + b\n    return b', ['барлық n дейінгі Фибоначчи сандарын қайтарады', 'n-ші жай санды қайтарады', 'n-ші факториалды қайтарады', 'n-ші Фибоначчи санды қайтарады']],
+      [438, 7, 3, 'python', 'Төмендегі формуланы Python кодымен дұрыс бейнелейтін жол: Fₙ = ((1 + √5)ⁿ - (1 - √5)ⁿ) / (2ⁿ · √5)', '', ['((1 + n)**5 - (1 - n)**5) / (2 * 5)', '((1 + 5)**n - (1 - 5)**n) / (2**n * 5)', '(math.pow(5, n) - math.pow(-5, n)) / (2**n * 5)', '((1 + math.sqrt(5))**n - (1 - math.sqrt(5))**n) / (2**n * math.sqrt(5))']],
+      [439, 7, 1, 'python', 'n=10 үшін формуламен есептегенде F₁₀ мәні', '', ['34', '55', '89', '21']],
+
+      // BLOCK 8 (440–444)
+      [440, 8, 1, 'python', 'Егер rev = char + rev орнына rev = rev + char деп өзгертілсе, код қандай логикалық қате жібереді?', '', ['Жол реттілігі сақталып, нәтиже өзгермейді', 'Жол дұрыс жиналады, бірақ палиндром дұрыс анықталмайды', 'Жол қате типке айналады', 'Цикл бұзылады, rev бос күйінде қалады']],
+      [441, 8, 2, 'python', 'Берілген код фрагментін оңтайландыру үшін төмендегілердің қайсысы ең тиімді әрі мағыналық жағынан эквивалент?', 'rev = ""\nfor char in s:\n    rev = char + rev', ['rev = reversed(s)', 'rev = list(s).reverse()', 'rev = s[::-1]', 'rev = s.sort()']],
+      [442, 8, 1, 'python', 'word = "12321" болған кезде алынатын нәтиже:', 'def isPalindrome(word):\n    return word == word[::-1]', ['False, өйткені бұл сандық жол', 'True, себебі жолдың керісі өзіне тең', 'Error, себебі жол тек әріп болу керек', 'None, себебі return жоқ']],
+      [443, 8, 1, 'python', 'input() арқылы енгізілген жол "Step on no pets" болса, программа нәтижесі', '', ['Yes, өйткені бұл сөйлем палиндром, бос орындар ескерілмейді', 'No, себебі программа әріп регистрін ескереді', 'No, себебі программа тек бос орындарды ескереді', 'Error, өйткені жолда бос орын бар']],
+      [444, 8, 1, 'python', '"Malayalam" жолын енгізгенде алынатын нәтиже:', 'def isPalindrome(s):\n    if len(s) <= 1:\n        return True\n    if s[0] != s[-1]:\n        return False\n    return isPalindrome(s[1:-1])\nprint(isPalindrome("Malayalam"))', ['True, өйткені бұл сөз палиндром', 'False, өйткені функция әріп регистрін ескереді', 'Error, себебі жол ұзындығы қысқара береді', 'True, себебі len(s) бірден 1-ге жетеді']],
+
+      // BLOCK 9 (445–449)
+      [445, 9, 3, 'web', '«CSS - стильдерді басқаруға мүмкіндік береді» мәтініндегі қаріп түсі', '', ['сұр', 'ақ', 'қара', 'қызыл']],
+      [446, 9, 0, 'web', '«CSS - стильдерді басқаруға мүмкіндік береді» мәтініне стиль беру үшін қолданылған селектор түрі', '', ['класс бойынша селектор', 'элемент бойынша селектор', 'идентификатор бойынша селектор', 'мәнмәтіндік селектор']],
+      [447, 9, 2, 'web', 'Сыртқы шегіністердің өлшемі', '', ['16px', '100vw', 'auto', '20px']],
+      [448, 9, 0, 'web', 'HTML кодта стиль кестелерін қолдану түрі', '', ['ішкі стиль', 'браузер стилі', 'байланысқан стиль', 'импортталған стиль']],
+      [449, 9, 1, 'web', '«CSS - стильдерді басқаруға мүмкіндік береді» мәтінінің астын сызу үшін CSS жазбасы', '', ['.description {font-variant: underline}', '.description {text-decoration: underline}', '.description {font-style: underline}', '.description {font-indent: underline}']],
+
+      // BLOCK 10 (450–453)
+      [450, 10, 3, 'python', 'Егер енгізу мәндері 100, 10, 2 болса, бағдарламадағы нәтиже', '', ['200.0', '1000.0', '210.0', '21.0']],
+      [451, 10, 0, 'python', 'Берілген код бойынша құрылымның мәні қай жағдайда өсім бермейді', '', ['пайыз мөлшерлемесі 0% болса', 'уақыт 1 жыл болса', 'ешқашан тең болмайды', 'principal = rate болса']],
+      [452, 10, 1, 'python', 'Бос орынға жазылатын дұрыс жол', '', ['CI = p * (1 + r/100)**t', 'Amount = p * pow((1 + r / 100), t)', 'Amount = p + CI', 'Total = p * r * t']],
+      [453, 10, 1, 'python', 'Берілген программа орындалғанда нәтиже:', 'def compoundInterest(p, r, t):\n    A = p * pow((1 + r / 100), t)\n    print(round(A, 2))\ncompoundInterest(1500, 4.3, 6)', ['1930.5', '1931.07', '1935.2', '1508.84']],
+
+      // BLOCK 11 (454–458)
+      [454, 11, 1, 'sql', 'Enrollments кестесіндегі жазба саны', '', ['5', '6', '3', '4']],
+      [455, 11, 1, 'sql', 'Students кестесіндегі бастапқы кілт', '', ['first_name', 'id', 'grade', 'age']],
+      [456, 11, 3, 'sql', 'Courses кестесіндегі course_name өрісіне тиісті мәндегі символдар саны', '', ['128', '65536', '16777215', '255']],
+      [457, 11, 2, 'sql', 'Students кестесіндегі бірінші жазбаны шығаруға арналған SQL сұранысы', '', ['SELECT * FROM Students LIKE 1', 'SELECT * FROM Students WHERE first', 'SELECT * FROM Students WHERE id = 1', 'SELECT 1 FROM Students']],
+      [458, 11, 3, 'sql', 'Enrollments кестесінің басқа кестелермен байланыс түрі', '', ['ешқандай байланыс жоқ', 'бірдің көпке байланысы', 'көптің бірге байланысы', 'көптің көпке байланысы']],
+
+      // BLOCK 12 (459–463)
+      [459, 12, 3, 'logic', '16 биттен тұратын Unicode кодтау кестесіндегі символ саны', '', ['256', '1024', '4096', '65536']],
+      [460, 12, 0, 'logic', 'UTF-16 кодтауында ақпараттық көлемі ең үлкен болатын мәтін', '', ['Қарлығаш - Сәния - Бақыт', 'Саяжан - Сәния - Бақыт', 'Гүл - Сәния - Бақыт', 'Нина - Сәния - Бақыт']],
+      [461, 12, 0, 'logic', 'Берілген мәтінді 16 биттік Unicode кодтау жүйесінде кодтағанда ақпараттық хабарлама көлемі', '', ['288 бит', '344 бит', '224 бит', '512 бит']],
+      [462, 12, 2, 'logic', 'Операциялық жүйелерде және веб-кеңістікте жиі қолданылатын Unicode түрі', '', ['KOI-1048', 'ASCII', 'UTF-8', 'Windows-1251']],
+      [463, 12, 1, 'logic', 'Берілген мәтін бойынша шифрланған кодтау нұсқасы', '', ['110 107 116 115 101 115 116', '110 107 116 116 107 115 116', '98 107 116 116 102 115 116', '110 107 115 116 101 115 116']],
+
+      // BLOCK 13 (464–468)
+      [464, 13, 3, 'logic', 'Пайыздық формат орындалған ұяшық', '', ['E1', 'B3', 'E4', 'D1']],
+      [465, 13, 1, 'logic', 'Сан мен мәтіндерден тұратын деректер типі', '', ['integer', 'text', 'formula', 'date']],
+      [466, 13, 1, 'logic', 'Активті беттегі көрсетілген сандық деректер саны', '', ['0', '3', '1', '2']],
+      [467, 13, 2, 'logic', 'Мәтіндік формат орындалған ұяшықтар', '', ['F1, E4', 'A3, F1', 'B4, C3', 'F1, B4']],
+      [468, 13, 3, 'logic', 'Реттелген деректердің ұяшықтар бойынша орналасуы', '', ['A1, B1, D1, A3, C3, F1', 'A1, B4, D1, A3, C3, E4', 'A1, B1, C1, A3, C3, E4', 'A1, B1, D1, A3, C3, E4']],
+
+      // BLOCK 14 (469–473)
+      [469, 14, 1, 'web', 'Номерленген тізім құрастыруға арналған тег', '', ['\u003cP\u003e', '\u003cOL\u003e', '\u003cN\u003e', '\u003cUL\u003e']],
+      [470, 14, 3, 'web', 'Терезенің тақырыбын енгізуге арналған тег', '', ['\u003cP\u003e', '\u003cBODY\u003e', '\u003cHTML\u003e', '\u003cTITLE\u003e']],
+      [471, 14, 1, 'web', 'Номерленген тізімді 5-тен бастауға арналған атрибут', '', ['type=5', 'start=5', 'li=5', 'i=5']],
+      [472, 14, 3, 'web', 'Тізімнің түрін өзгертуге арналған атрибут', '', ['li', 'tt', 'start', 'type']],
+      [473, 14, 3, 'web', 'Көпсатылы тізім құратын дескриптор', '', ['\u003cDT\u003e, \u003c/DT\u003e', '\u003cDD\u003e, \u003c/DD\u003e', '\u003cBR\u003e', '\u003cDL\u003e, \u003c/DL\u003e']],
+
+      // BLOCK 15 (474–478)
+      [474, 15, 0, 'security', 'Компьютерлік вирус дегеніміз', '', ['компьютерге зиян келтіру үшін жазылған арнайы шағын программа', 'компьютерді жылдамдататын программа', 'файлдарды автоматты түрде реттейтін жүйе', 'мәтін теруге арналған редактор']],
+      [475, 15, 2, 'security', 'Вирус жұққан компьютерде байқалатын негізгі белгі', '', ['барлық программалар жылдамырақ жұмыс істейді', 'компьютердің жады көбейеді', 'кейбір программалар тоқтап, компьютердің жылдамдығы төмендейді', 'монитор сапасы жақсарады']],
+      [476, 15, 3, 'security', 'Компьютер жадында тұрақты сақталатын вирустар', '', ['резиденттік емес', 'логикалық бомбалар', 'макро-вирустар', 'резиденттік']],
+      [477, 15, 1, 'security', 'Компьютер жадында тұрақты сақталмайтын вирустар', '', ['макро-вирустар', 'резиденттік емес', 'логикалық бомбалар', 'резиденттік']],
+      [478, 15, 0, 'security', 'Программалар мен жүйелік файлдардың бастапқы күйін есте сақтап, кейін өзгерістерді салыстырып хабарлайтын антивирустық программа түрі', '', ['ревизор', 'детектор', 'құрт', 'фильтр']],
+
+      // BLOCK 16 (479–483)
+      [479, 16, 1, 'ai', 'Үш өлшемді модельдеудің алғашқы кезеңі', '', ['барлық пішіндерді нақтылау', 'фигураларды салу', 'дайын фигураларды іздеу', 'айналу денелерін салу']],
+      [480, 16, 2, 'ai', 'SketchUp программасын жасап шығарған компания', '', ['Microsoft', 'Intel', '@Last Software', 'Google']],
+      [481, 16, 2, 'ai', 'Суретте көрсетілген SketchUp құралдар тобы', '', ['сызу құралдары', 'модификациялау құралдары', 'фигуралар', 'мәтін құралдары']],
+      [482, 16, 2, 'ai', 'SketchUp программасында дайындалатын негізгі нәтиже', '', ['эскиз', 'фигура', 'модель', 'жазба']],
+      [483, 16, 1, 'ai', 'SketchUp программасында Материалдар, Компоненттер және Стильдер көбіне қандай элемент ретінде беріледі?', '', ['сурет салу құралы', 'терезе', 'файл кеңейтімі', 'камера режимі']],
+
+      // BLOCK 17 (484–488)
+      [484, 17, 1, 'web', 'Суреттерді қоюға арналған арнайы тег', '', ['a', 'img', 'meta', 'h']],
+      [485, 17, 0, 'web', 'HTML кодқа сәйкес парақшадағы қаріп өлшемі', '', ['40px', '16px', '14px', '2px']],
+      [486, 17, 0, 'web', 'img тегіндегі alt атрибутының қызметі', '', ['альтернативті мәтінді шығарады', 'файлға сілтеме жасайды', 'сурет орналасқан бума атауын көрсетеді', 'суретке меңзерді жақындатқанда пайда болатын мәтінді шығарады']],
+      [487, 17, 0, 'web', 'HTML кодқа сәйкес браузердің тақырыптар бөлімінде орналасқан құжаттың арнайы тақырыбындағы мәтін', '', ['Document', 'Менің алғашқы web-парақшам', 'Wikipedia', 'Көбірек оқу']],
+      [488, 17, 3, 'web', 'img тегінде орналасқан сурет форматы', '', ['графикалық примитивті кескіндерді бейнелеуге арналған формат', 'иконкалар немесе батырмаларға арналған формат', 'анимация үшін қолданылатын формат', 'фотосуреттерді сақтау үшін қолданылатын формат']],
+
+      // BLOCK 18 (489–493)
+      [489, 18, 1, 'python', 'Кодтағы "return -1" жолының жазылу себебі', '', ['егер индекстер теріс мән болса', 'егер ізделетін элемент массивтен табылмаса', 'егер элемент бірінші орында болса', 'егер массив сұрыпталған болса']],
+      [490, 18, 0, 'python', 'Егер тізімдегі алғашқы элемент ізделсе, онда салыстыру саны:', 'arr = [3, 7, 1, 9]\ntarget = 3', ['1', '2', '3', '4']],
+      [491, 18, 2, 'python', 'Алгоритм ең көп операция орындайтын жағдай', '', ['егер элемент ең басында орналасқан болса', 'егер массивте бір ғана элемент болса', 'егер элемент соңында орналасса немесе мүлде табылмаса', 'егер target бірінші индексте болса']],
+      [492, 18, 2, 'python', 'Бұл алгоритм тиімсіз болып саналатын жағдай', '', ['егер массивте бір ғана элемент болса', 'егер ізделетін элемент бірінші тұрса', 'егер массив өте үлкен болса', 'егер массив бос болса']],
+      [493, 18, 1, 'python', 'Берілген кодта target = 9 болса, программа нәтижесі қандай болады?', '', ['Табылды, индексі - 2', 'Табылды, индексі - 3', 'Табылды, индексі - 4', 'Табылмады']],
+
+      // BLOCK 19 (494–498)
+      [494, 19, 0, 'ai', 'Жоғары деңгейлі құрылғы жиынтығынан тұратын 3D жобалы виртуалды шындық гарнитурасы', '', ['Oculus Rift', 'Dell OptiPlex 3000', 'AirPods', 'DualShock']],
+      [495, 19, 2, 'ai', 'Белгілі бір виртуалды объектіні танитын және сол объект туралы керек ақпаратты беретін кеңейтілген шындық қосымшасының бір түрі', '', ['суперпозиция', 'проекциялар', 'маркерлер негізінде', 'позициялық']],
+      [496, 19, 2, 'ai', '3D панорама жасау кезеңдері', '', ['суретке түсіру, навигация орнату, жоспар құру', 'түсу нүктесін анықтау, құрылымды ойлау, түзету', 'фототүсірілім жасау, біріктіру, өңдеу, түрлендіру', 'түрлендіру, жинақтау, өңдеу, импорттау']],
+      [497, 19, 0, 'ai', '«Позициялық кеңейтілген шындық» ұғымы', '', ['орналасқан жерге байланысты виртуалды суреттер мен жол сілтемелері пайда болады', 'қосымшаларда экран бетіндегі 3D үлгідегі сурет адаммен өзара әрекеттесе алады', 'белгілі бір виртуалды объектіні таниды және сол объект туралы керекті ақпаратты береді', 'нақты уақыт режимінде қосымша элементтермен толықтыру, объектілерді тану']],
+      [498, 19, 3, 'ai', 'Маңызды компьютер серверлерінің жұмысын жеңілдететін, көптеген баптаулары бар Windows, Linux операциялық жүйелерімен жұмыс жасайтын виртуалды машина', '', ['VirtualDub', 'VS code', 'Pano2VR', 'VMWare']],
+
+      // BLOCK 20 (499–503)
+      [499, 20, 3, 'logic', 'Екілік санау жүйесінде қолданылатын цифрлар', '', ['0, 1 және 2', '1 және 2', '0 және 2', '0 және 1']],
+      [500, 20, 1, 'logic', 'Мәліметтерді екілік кодтан адамға түсінікті форматқа түрлендіру', '', ['unicode', 'декодтау', 'кодтау', 'кодтық кесте']],
+      [501, 20, 3, 'logic', 'Римдік санау жүйесі', '', ['позициялық сандар жүйесіндегі сандарды ұсынудың элементі', 'цифрды ұсыну ыңғайлылығы және компьютерлік құжаттамада қолданылады', 'позициялық емес санау жүйелерінде әрбір цифрдың мәніне тәуелді', 'позициялық емес санау жүйелерінің ішіндегі ең көп тараған']],
+      [502, 20, 2, 'logic', 'Бір немесе бірнеше пікірдің көмегімен жаңа пікір туғызатын ойлау формасы', '', ['логика', 'түсінік', 'ой қорытындылау', 'пікір']],
+      [503, 20, 0, 'logic', 'Қарапайым пікірлерден құралған күрделі пікірлердің барлық қабылдайтын мүмкін болған мәндерін көрсетеді', '', ['ақиқат кестесі', 'логикалық элемент', 'логикалық өрнек', 'кестедегі қатар']]
+    ];
+
+    const QUESTIONS = RAW_QUESTIONS.map(r => ({
+      id: r[0],
+      blockId: r[1],
+      ans: r[2],
+      topic: r[3],
+      q: r[4],
+      code: r[5],
+      opts: r[6],
+      visual: Q_VISUALS[r[0]] || ''
+    }));
+
+    // =========================================================================
+    // 5. PERSISTENCE (localStorage with pbb3_v2_* keys)
+    // =========================================================================
+    const LS = {
+      solved: 'pbb3_v2_solved',
+      errors: 'pbb3_v2_errors',
+      bestExam: 'pbb3_v2_best_exam'
+    };
+
+    let solvedSet = new Set();
+    let errorSet = new Set();
+    let bestExam = null;
+
+    function loadStorage() {
+      try {
+        const s = JSON.parse(localStorage.getItem(LS.solved) || '[]');
+        const e = JSON.parse(localStorage.getItem(LS.errors) || '[]');
+        const b = localStorage.getItem(LS.bestExam);
+        if (Array.isArray(s)) solvedSet = new Set(s);
+        if (Array.isArray(e)) errorSet = new Set(e);
+        if (b !== null) bestExam = JSON.parse(b);
+      } catch (err) {}
+    }
+
+    function saveStorage() {
+      try {
+        localStorage.setItem(LS.solved, JSON.stringify([...solvedSet]));
+        localStorage.setItem(LS.errors, JSON.stringify([...errorSet]));
+        if (bestExam !== null) localStorage.setItem(LS.bestExam, JSON.stringify(bestExam));
+      } catch (err) {}
+    }
+
+    // =========================================================================
+    // 6. APPLICATION STATE & HELPERS
+    // =========================================================================
+    let activeTab = 'contexts';
+    let chosenMode = 'game'; // 'game' | 'study'
+    let ctxCollapsed = false;
+
+    let session = {
+      active: false,
+      title: '',
+      mode: 'game', // 'game' | 'study' | 'exam'
+      list: [],
+      index: 0,
+      answers: {},
+      flags: new Set(),
+      score: 0,
+      streak: 0,
+      maxStreak: 0,
+      timer: null,
+      timeLeft: 0,
+      restartFn: null
+    };
+
+    const LETTERS = ['A', 'B', 'C', 'D'];
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function fmtMMSS(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function hasAnyVisual(q) {
+      return Boolean(q.visual || (q.blockId && BLOCK_VISUALS[q.blockId]));
+    }
+
+    // =========================================================================
+    // 7. MODAL HELPERS (Zero alert() / confirm())
+    // =========================================================================
+    function openModal(title, bodyHtml, footHtml) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalBody').innerHTML = bodyHtml;
+      document.getElementById('modalFoot').innerHTML = footHtml || '<button class="btn btn-cyan" onclick="closeModal()">Жабу</button>';
+      document.getElementById('modalBackdrop').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('modalBackdrop').classList.add('hidden');
+    }
+
+    function backdropClick(e) {
+      if (e.target && e.target.id === 'modalBackdrop') closeModal();
+    }
+
+    function askClearErrors() {
+      if (errorSet.size === 0) {
+        openModal('Қателер банкі бос', '<p>Қазір қателер банкінде сұрақ жоқ. Жарайсыз!</p>');
+        return;
+      }
+      openModal(
+        'Қателер банкін тазалау',
+        `<p>Барлық <b>${errorSet.size}</b> қате сұрақты өшіргіңіз келе ме?</p>`,
+        `<button class="btn btn-ghost" onclick="closeModal()">Болдырмау</button>
+         <button class="btn btn-danger" onclick="confirmClearErrors()">Иә, тазалау</button>`
+      );
+    }
+
+    function confirmClearErrors() {
+      errorSet.clear();
+      saveStorage();
+      updateStats();
+      closeModal();
+    }
+
+    // =========================================================================
+    // 8. DASHBOARD RENDERING
+    // =========================================================================
+    function updateStats() {
+      const pct = Math.round((solvedSet.size / QUESTIONS.length) * 100);
+      document.getElementById('solvedVal').textContent = solvedSet.size;
+      document.getElementById('solvedPctLabel').textContent = `${pct}%`;
+      document.getElementById('solvedBar').style.width = `${pct}%`;
+      document.getElementById('errCountBadge').textContent = errorSet.size;
+      document.getElementById('bestExamVal').textContent = bestExam ? `${bestExam.correct}/${bestExam.total}` : '—';
+    }
+
+    function renderContextsGrid() {
+      const html = CONTEXT_BLOCKS.map(b => {
+        const qs = QUESTIONS.filter(q => q.blockId === b.id);
+        const done = qs.filter(q => solvedSet.has(q.id)).length;
+        const pct = Math.round((done / Math.max(1, qs.length)) * 100);
+        const hasVis = Boolean(BLOCK_VISUALS[b.id] || qs.some(q => q.visual));
+        return `
+          <div class="card">
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div class="card-top">
+                <span class="badge badge-purple">№${b.range[0]}–${b.range[1]} • ${qs.length} сұрақ</span>
+                ${hasVis ? '<span class="badge badge-amber">🖼️ Кесте/Сызба</span>' : (b.code ? '<span class="badge badge-cyan">💻 Код</span>' : '')}
+              </div>
+              <div class="card-title">${escapeHtml(b.title)}</div>
+              <div class="card-desc">${escapeHtml(b.text.slice(0, 108))}${b.text.length > 108 ? '…' : ''}</div>
+              <div>
+                <div class="stat-label"><span>Прогресс</span><span>${done}/${qs.length}</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width:${pct}%;"></div></div>
+              </div>
+            </div>
+            <div class="card-btns">
+              <button class="btn btn-cyan" onclick="startContextBlock(${b.id}, false)">▶ Бастау</button>
+              <button class="btn btn-ghost" onclick="startContextBlock(${b.id}, true)">🔀 Аралас</button>
+            </div>
+          </div>`;
+      }).join('');
+      document.getElementById('contextsGrid').innerHTML = html;
+    }
+
+    function renderClosedGrid() {
+      const b1 = QUESTIONS.filter(q => q.id >= 342 && q.id <= 375);
+      const b2 = QUESTIONS.filter(q => q.id >= 376 && q.id <= 404);
+      const visCode = QUESTIONS.filter(q => hasAnyVisual(q) || q.code || (q.blockId && BLOCK_MAP[q.blockId].code));
+
+      const cards = [
+        { id: 'c1', badge: '342–375 • 34 сұрақ', tag: 'badge-cyan', title: '1-Блок (№342–№375)', desc: 'Видеомонтаж, нейрондық желі SVG, Python циклдері, MAC адрес, Ашық үкімет, AR суперпозиция.', list: b1 },
+        { id: 'c2', badge: '376–404 • 29 сұрақ', tag: 'badge-purple', title: '2-Блок (№376–№404)', desc: 'Санау жүйелері, краудфандинг, DeepLearning, MaaS, SQL байланыстары, криптоанализ.', list: b2 },
+        { id: 'vc', badge: `Визуал & Код • ${visCode.length} сұрақ`, tag: 'badge-amber', title: 'Суретті & Кодты сұрақтар', desc: 'Барлық SVG диаграммалар, Excel/Unicode/Санау кестелері және Python/SQL/HTML/CSS кодтары.', list: visCode },
+        { id: 'all', badge: '342–503 • 162 сұрақ', tag: 'badge-green', title: 'Барлық 162 сұрақ Толық Марафон', desc: '3-бөлімнің 63 жабық сұрағы + барлық 20 мәтіндік контекст (99 сұрақ) бірге.', list: QUESTIONS }
+      ];
+
+      document.getElementById('closedGrid').innerHTML = cards.map(c => {
+        const done = c.list.filter(q => solvedSet.has(q.id)).length;
+        const pct = Math.round((done / Math.max(1, c.list.length)) * 100);
+        return `
+          <div class="card">
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div class="card-top">
+                <span class="badge ${c.tag}">${c.badge}</span>
+                <span class="stat-sub">${pct}%</span>
+              </div>
+              <div class="card-title">${c.title}</div>
+              <div class="card-desc">${c.desc}</div>
+              <div class="progress-track"><div class="progress-fill" style="width:${pct}%;"></div></div>
+            </div>
+            <div class="card-btns">
+              <button class="btn btn-cyan" onclick="startClosedPack('${c.id}', false)">▶ Бастау</button>
+              <button class="btn btn-ghost" onclick="startClosedPack('${c.id}', true)">🔀 Аралас</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function renderBank() {
+      const term = (document.getElementById('bankSearch')?.value || '').trim().toLowerCase();
+      const filter = document.getElementById('bankFilter')?.value || 'all';
+
+      const list = QUESTIONS.filter(q => {
+        if (filter === 'closed' && q.blockId !== 0) return false;
+        if (filter === 'context' && q.blockId === 0) return false;
+        if (filter === 'visual' && !hasAnyVisual(q)) return false;
+        if (filter === 'code' && !(q.code || (q.blockId && BLOCK_MAP[q.blockId].code))) return false;
+        if (!term) return true;
+        const b = q.blockId ? BLOCK_MAP[q.blockId] : null;
+        const hay = `${q.id} ${q.q} ${q.code} ${q.opts.join(' ')} ${b ? b.title + ' ' + b.text : ''}`.toLowerCase();
+        return hay.includes(term);
+      });
+
+      document.getElementById('bankCount').textContent = `Көрсетілуде: ${list.length} / ${QUESTIONS.length} сұрақ`;
+      const container = document.getElementById('bankList');
+
+      if (!list.length) {
+        container.innerHTML = '<div class="bank-card" style="text-align:center;color:var(--muted);">Сұрақ табылмады. Іздеу сөзін өзгертіп көріңіз.</div>';
+        return;
+      }
+
+      const shownBlocks = new Set();
+      container.innerHTML = list.map(q => {
+        const b = q.blockId ? BLOCK_MAP[q.blockId] : null;
+        const t = TOPIC_META[q.topic] ? TOPIC_META[q.topic].label : q.topic;
+        let blockVisHtml = '';
+        if (b && BLOCK_VISUALS[b.id] && (!shownBlocks.has(b.id) || filter === 'visual' || term)) {
+          shownBlocks.add(b.id);
+          blockVisHtml = `<div class="vis-wrap" style="margin-top:4px;">${BLOCK_VISUALS[b.id]}</div>`;
+        }
+        return `
+          <div class="bank-card">
+            <div class="q-meta">
+              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+                <span class="badge badge-purple">#${q.id}</span>
+                <span class="badge badge-cyan">${t}</span>
+                ${b ? `<span class="badge badge-amber">${escapeHtml(b.title)}</span>` : ''}
+              </div>
+              ${solvedSet.has(q.id) ? '<span class="badge badge-green">✓ Игерілген</span>' : ''}
+            </div>
+            <div style="font-weight:800;color:#fff;font-size:0.96rem;">${escapeHtml(q.q)}</div>
+            ${q.code ? `<pre class="code-box">${escapeHtml(q.code)}</pre>` : ''}
+            ${q.visual ? `<div class="vis-wrap">${q.visual}</div>` : ''}
+            ${blockVisHtml}
+            <div class="bank-opts">
+              ${q.opts.map((opt, idx) => `
+                <div class="bank-opt ${idx === q.ans ? 'is-ans' : ''}">
+                  <b>${LETTERS[idx]})</b> ${escapeHtml(opt)} ${idx === q.ans ? ' ✓' : ''}
+                </div>`).join('')}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function renderDashboard() {
+      updateStats();
+      renderContextsGrid();
+      renderClosedGrid();
+      if (activeTab === 'bank') renderBank();
+    }
+
+    // =========================================================================
+    // 9. CONTROLS (Tabs, Mode, Sound)
+    // =========================================================================
+    function switchTab(tab) {
+      Sound.click();
+      activeTab = tab;
+      ['contexts', 'closed', 'exam', 'bank'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
+        document.getElementById(`panel-${t}`).classList.toggle('hidden', t !== tab);
+      });
+      if (tab === 'bank') renderBank();
+    }
+
+    function setMode(mode) {
+      Sound.click();
+      chosenMode = mode;
+      const gBtn = document.getElementById('modeGameBtn');
+      const sBtn = document.getElementById('modeStudyBtn');
+      const hint = document.getElementById('modeHint');
+      if (mode === 'game') {
+        gBtn.className = 'mode-btn active-game';
+        sBtn.className = 'mode-btn';
+        hint.innerHTML = '🔥 <b>Ойын режимі:</b> 40 сек таймер, жылдамдық бонусы және дұрыс жауап сериясы.';
+      } else {
+        sBtn.className = 'mode-btn active-study';
+        gBtn.className = 'mode-btn';
+        hint.innerHTML = '📚 <b>Жаттау режимі:</b> Таймерсіз, сұрақтар навигаторымен еркін қайталау.';
+      }
+    }
+
+    function toggleSound() {
+      Sound.enabled = !Sound.enabled;
+      const btn = document.getElementById('soundBtn');
+      if (Sound.enabled) {
+        btn.className = 'btn btn-sound-on';
+        btn.textContent = '🔊 Дыбыс: Қосулы';
+        Sound.click();
+      } else {
+        btn.className = 'btn btn-sound-off';
+        btn.textContent = '🔇 Дыбыс: Өшірулі';
+      }
+    }
+
+    // =========================================================================
+    // 10. QUIZ LAUNCHERS
+    // =========================================================================
+    function startContextBlock(blockId, isShuffle) {
+      const b = BLOCK_MAP[blockId];
+      if (!b) return;
+      let list = QUESTIONS.filter(q => q.blockId === blockId);
+      if (isShuffle) list = shuffle(list);
+      launchQuiz(b.title + (isShuffle ? ' • Аралас' : ''), chosenMode, list, () => startContextBlock(blockId, isShuffle));
+    }
+
+    function startContextMarathon(isShuffle) {
+      let list = QUESTIONS.filter(q => q.blockId > 0);
+      if (isShuffle) list = shuffle(list);
+      launchQuiz('📖 20 Контекст Марафоны (99 сұрақ)' + (isShuffle ? ' • Аралас' : ''), chosenMode, list, () => startContextMarathon(isShuffle));
+    }
+
+    function startClosedPack(packId, isShuffle) {
+      let list = [];
+      let title = '';
+      if (packId === 'c1') { list = QUESTIONS.filter(q => q.id >= 342 && q.id <= 375); title = '1-Блок (№342–№375)'; }
+      else if (packId === 'c2') { list = QUESTIONS.filter(q => q.id >= 376 && q.id <= 404); title = '2-Блок (№376–№404)'; }
+      else if (packId === 'vc') { list = QUESTIONS.filter(q => hasAnyVisual(q) || q.code || (q.blockId && BLOCK_MAP[q.blockId].code)); title = 'Суретті & Кодты сұрақтар'; }
+      else { list = QUESTIONS.slice(); title = 'Толық Марафон (162 сұрақ)'; }
+      if (isShuffle) { list = shuffle(list); title += ' • Аралас'; }
+      launchQuiz(title, chosenMode, list, () => startClosedPack(packId, isShuffle));
+    }
+
+    function startErrorBank() {
+      if (errorSet.size === 0) {
+        openModal('Қателер банкі бос', '<p>Қазір қате сұрақтар жоқ. Тест тапсырған соң қателескен сұрақтарыңыз осында автоматты жиналады.</p>');
+        return;
+      }
+      const list = QUESTIONS.filter(q => errorSet.has(q.id));
+      launchQuiz(`🔄 Қатемен жұмыс (${list.length} сұрақ)`, 'study', shuffle(list), startErrorBank);
+    }
+
+    function startExam() {
+      // Mix of 20 closed questions + 4 full random context blocks (~20 questions) -> exactly 40 questions
+      const closedPool = shuffle(QUESTIONS.filter(q => q.blockId === 0));
+      const blockIds = shuffle(CONTEXT_BLOCKS.map(b => b.id)).slice(0, 4);
+      const ctxQs = [];
+      blockIds.forEach(bid => {
+        QUESTIONS.filter(q => q.blockId === bid).forEach(q => ctxQs.push(q));
+      });
+      const neededClosed = Math.max(0, 40 - ctxQs.length);
+      const examList = [...closedPool.slice(0, neededClosed), ...ctxQs].slice(0, 40);
+      launchQuiz('🎓 Емтихан Симуляторы (40 сұрақ · 60 мин)', 'exam', examList, startExam);
+    }
+
+    function launchQuiz(title, mode, list, restartFn) {
+      Sound.click();
+      clearInterval(session.timer);
+      ctxCollapsed = false;
+      session = {
+        active: true,
+        title,
+        mode,
+        list,
+        index: 0,
+        answers: {},
+        flags: new Set(),
+        score: 0,
+        streak: 0,
+        maxStreak: 0,
+        timer: null,
+        timeLeft: mode === 'exam' ? 3600 : (mode === 'game' ? 40 : 0),
+        restartFn
+      };
+
+      document.getElementById('dashboardView').classList.add('hidden');
+      document.getElementById('resultView').classList.add('hidden');
+      document.getElementById('quizView').classList.remove('hidden');
+
+      document.getElementById('quizTitle').textContent = title;
+      document.getElementById('streakPill').classList.toggle('hidden', mode !== 'game');
+      document.getElementById('scorePill').classList.toggle('hidden', mode === 'exam');
+      document.getElementById('timerPill').classList.toggle('hidden', mode === 'study');
+      document.getElementById('flagBtn').classList.toggle('hidden', mode !== 'exam');
+      document.getElementById('studyNavBox').classList.toggle('hidden', mode === 'game');
+
+      if (mode === 'exam') startExamTimer();
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================================
+    // 11. TIMERS
+    // =========================================================================
+    function startQuestionTimer() {
+      clearInterval(session.timer);
+      session.timeLeft = 40;
+      const pill = document.getElementById('timerPill');
+      pill.className = 'hud-pill pill-timer';
+      pill.textContent = `⏱ ${session.timeLeft}с`;
+
+      session.timer = setInterval(() => {
+        session.timeLeft--;
+        pill.textContent = `⏱ ${session.timeLeft}с`;
+        if (session.timeLeft <= 10) pill.className = 'hud-pill pill-timer danger';
+        if (session.timeLeft <= 0) {
+          clearInterval(session.timer);
+          if (session.answers[session.index] === undefined) selectOption(-1);
+        }
+      }, 1000);
+    }
+
+    function startExamTimer() {
+      clearInterval(session.timer);
+      const pill = document.getElementById('timerPill');
+      pill.className = 'hud-pill pill-timer';
+      pill.textContent = `⏱ ${fmtMMSS(session.timeLeft)}`;
+
+      session.timer = setInterval(() => {
+        session.timeLeft--;
+        pill.textContent = `⏱ ${fmtMMSS(session.timeLeft)}`;
+        if (session.timeLeft <= 300) pill.className = 'hud-pill pill-timer danger';
+        if (session.timeLeft <= 0) {
+          clearInterval(session.timer);
+          finishQuiz();
+        }
+      }, 1000);
+    }
+
+    // =========================================================================
+    // 12. QUESTION RENDERING & INTERACTION
+    // =========================================================================
+    function toggleContextPanel() {
+      ctxCollapsed = !ctxCollapsed;
+      document.getElementById('contextPanelBody').classList.toggle('hidden', ctxCollapsed);
+      document.getElementById('ctxToggleBtn').textContent = ctxCollapsed ? 'Ашу' : 'Жасыру';
+    }
+
+    function renderQuestion() {
+      const q = session.list[session.index];
+      const total = session.list.length;
+      const chosen = session.answers[session.index];
+
+      document.getElementById('quizCounter').textContent = `Сұрақ ${session.index + 1} / ${total}`;
+      document.getElementById('quizProgressFill').style.width = `${((session.index + 1) / total) * 100}%`;
+      document.getElementById('streakPill').textContent = `🔥 ${session.streak}`;
+      document.getElementById('scorePill').textContent = `⭐ ${session.score} ұпай`;
+
+      document.getElementById('qIdBadge').textContent = `№${q.id}`;
+      const tMeta = TOPIC_META[q.topic] ? TOPIC_META[q.topic].label : q.topic;
+      document.getElementById('qTopicBadge').textContent = q.blockId ? `📖 Блок ${q.blockId} • ${tMeta}` : tMeta;
+      document.getElementById('qModeTag').textContent =
+        session.mode === 'exam' ? 'Емтихан режимі' :
+        session.mode === 'game' ? 'Ойын режимі' : 'Жаттау режимі';
+
+      // Flag state
+      const fBtn = document.getElementById('flagBtn');
+      if (session.mode === 'exam') {
+        const isFlagged = session.flags.has(session.index);
+        fBtn.textContent = isFlagged ? '🚩 Белгіленген' : '🚩 Белгілеу';
+        fBtn.style.borderColor = isFlagged ? '#f59e0b' : '';
+        fBtn.style.color = isFlagged ? '#fcd34d' : '';
+      }
+
+      // Context panel
+      const ctxPanel = document.getElementById('contextPanel');
+      if (q.blockId && BLOCK_MAP[q.blockId]) {
+        const b = BLOCK_MAP[q.blockId];
+        document.getElementById('contextPanelTitle').textContent = b.title;
+        let bodyHtml = `<div class="context-text">${escapeHtml(b.text)}</div>`;
+        if (b.code) bodyHtml += `<pre class="code-box">${escapeHtml(b.code)}</pre>`;
+        if (BLOCK_VISUALS[b.id]) bodyHtml += `<div class="vis-wrap">${BLOCK_VISUALS[b.id]}</div>`;
+        const bodyEl = document.getElementById('contextPanelBody');
+        bodyEl.innerHTML = bodyHtml;
+        bodyEl.classList.toggle('hidden', ctxCollapsed);
+        document.getElementById('ctxToggleBtn').textContent = ctxCollapsed ? 'Ашу' : 'Жасыру';
+        ctxPanel.classList.remove('hidden');
+      } else {
+        ctxPanel.classList.add('hidden');
+      }
+
+      // Question text, code & visual
+      document.getElementById('qText').textContent = q.q;
+      const cWrap = document.getElementById('qCodeWrap');
+      if (q.code) {
+        document.getElementById('qCode').textContent = q.code;
+        cWrap.classList.remove('hidden');
+      } else {
+        cWrap.classList.add('hidden');
+      }
+
+      const vWrap = document.getElementById('qVisualWrap');
+      if (q.visual) {
+        vWrap.innerHTML = q.visual;
+        vWrap.classList.remove('hidden');
+      } else {
+        vWrap.innerHTML = '';
+        vWrap.classList.add('hidden');
+      }
+
+      // Options
+      const revealed = session.mode !== 'exam' && chosen !== undefined;
+      const grid = document.getElementById('optionsGrid');
+      grid.innerHTML = q.opts.map((opt, idx) => {
+        let cls = `opt-tile opt-${idx}`;
+        if (session.mode === 'exam' && chosen === idx) {
+          cls += ' opt-exam-chosen';
+        } else if (revealed) {
+          if (idx === q.ans) cls += ' opt-correct';
+          else if (idx === chosen) cls += ' opt-wrong';
+          else cls += ' opt-dim';
+        }
+        return `
+          <button class="${cls}" ${revealed ? 'disabled' : ''} onclick="selectOption(${idx})">
+            <span class="opt-key">${LETTERS[idx]}</span>
+            <span class="opt-label">${escapeHtml(opt)}</span>
+          </button>`;
+      }).join('');
+
+      // Feedback bar
+      const fb = document.getElementById('feedbackBar');
+      const fbMsg = document.getElementById('feedbackMsg');
+      if (revealed) {
+        fb.classList.remove('hidden');
+        if (chosen === q.ans) {
+          fb.className = 'feedback-bar fb-ok';
+          fbMsg.innerHTML = '✅ Дұрыс жауап! Жарайсыз.';
+        } else if (chosen === -1) {
+          fb.className = 'feedback-bar fb-warn';
+          fbMsg.innerHTML = `⏰ Уақыт аяқталды! Дұрыс жауап: <b>${LETTERS[q.ans]}) ${escapeHtml(q.opts[q.ans])}</b>`;
+        } else {
+          fb.className = 'feedback-bar fb-err';
+          fbMsg.innerHTML = `❌ Қате! Дұрыс жауап: <b>${LETTERS[q.ans]}) ${escapeHtml(q.opts[q.ans])}</b>`;
+        }
+      } else {
+        fb.classList.add('hidden');
+      }
+
+      // Footer buttons
+      document.getElementById('prevBtn').disabled = session.index === 0;
+      document.getElementById('nextBtn').textContent = session.index === total - 1 ? 'Нәтиже 🏁' : 'Келесі →';
+
+      if (session.mode !== 'game') renderInlineNav();
+
+      if (session.mode === 'game') {
+        if (chosen === undefined) startQuestionTimer();
+        else clearInterval(session.timer);
+      }
+    }
+
+    function renderInlineNav() {
+      const answeredCount = Object.keys(session.answers).length;
+      document.getElementById('navSummary').textContent = `${answeredCount}/${session.list.length} жауап берілді`;
+      document.getElementById('navDots').innerHTML = session.list.map((q, i) => {
+        const a = session.answers[i];
+        let cls = 'nav-dot';
+        if (i === session.index) cls += ' cur';
+        if (a !== undefined) {
+          if (session.mode === 'exam') cls += ' picked';
+          else cls += (a === q.ans ? ' ok' : ' bad');
+        }
+        const flagHtml = session.flags.has(i) ? '<span style="position:absolute;top:-5px;right:-4px;font-size:10px;">🚩</span>' : '';
+        return `<button class="${cls}" onclick="jumpToQ(${i})">${i + 1}${flagHtml}</button>`;
+      }).join('');
+    }
+
+    function selectOption(optIdx) {
+      const q = session.list[session.index];
+
+      if (session.mode === 'exam') {
+        Sound.click();
+        session.answers[session.index] = optIdx;
+        renderQuestion();
+        return;
+      }
+
+      if (session.answers[session.index] !== undefined) return;
+      clearInterval(session.timer);
+      session.answers[session.index] = optIdx;
+
+      if (optIdx === q.ans) {
+        Sound.correct();
+        session.streak++;
+        if (session.streak > session.maxStreak) session.maxStreak = session.streak;
+        const speedBonus = session.mode === 'game' ? session.timeLeft * 10 : 0;
+        const streakBonus = Math.min(session.streak, 5) * 40;
+        session.score += 100 + speedBonus + streakBonus;
+        solvedSet.add(q.id);
+        errorSet.delete(q.id);
+      } else {
+        Sound.wrong();
+        session.streak = 0;
+        errorSet.add(q.id);
+      }
+      saveStorage();
+      renderQuestion();
+    }
+
+    function prevQ() {
+      if (session.index > 0) {
+        Sound.click();
+        session.index--;
+        renderQuestion();
+      }
+    }
+
+    function nextQ() {
+      Sound.click();
+      if (session.index < session.list.length - 1) {
+        session.index++;
+        renderQuestion();
+      } else {
+        if (session.mode === 'exam') askFinishQuiz();
+        else finishQuiz();
+      }
+    }
+
+    function jumpToQ(i) {
+      Sound.click();
+      session.index = i;
+      closeModal();
+      renderQuestion();
+    }
+
+    function toggleFlag() {
+      Sound.click();
+      if (session.flags.has(session.index)) session.flags.delete(session.index);
+      else session.flags.add(session.index);
+      renderQuestion();
+    }
+
+    function openMapModal() {
+      Sound.click();
+      const dots = session.list.map((q, i) => {
+        const a = session.answers[i];
+        let cls = 'nav-dot';
+        if (i === session.index) cls += ' cur';
+        if (a !== undefined) {
+          if (session.mode === 'exam') cls += ' picked';
+          else cls += (a === q.ans ? ' ok' : ' bad');
+        }
+        const flagHtml = session.flags.has(i) ? '<span style="position:absolute;top:-5px;right:-4px;font-size:10px;">🚩</span>' : '';
+        return `<button class="${cls}" onclick="jumpToQ(${i})">${i + 1}${flagHtml}</button>`;
+      }).join('');
+      openModal(
+        `🗺️ Сұрақтар картасы (${Object.keys(session.answers).length}/${session.list.length})`,
+        `<div class="nav-dots" style="max-height:52vh;">${dots}</div>`,
+        '<button class="btn btn-ghost" onclick="closeModal()">Жабу</button>'
+      );
+    }
+
+    function askExitQuiz() {
+      openModal(
+        'Тесттен шығу',
+        '<p>Басты бетке оралғыңыз келе ме? Ағымдағы тест сессиясы тоқтатылады.</p>',
+        `<button class="btn btn-ghost" onclick="closeModal()">Жалғастыру</button>
+         <button class="btn btn-danger" onclick="closeModal(); goHome();">Шығу</button>`
+      );
+    }
+
+    function askFinishQuiz() {
+      const done = Object.keys(session.answers).length;
+      const left = session.list.length - done;
+      openModal(
+        'Тестті аяқтау',
+        `<p>Жауап берілген сұрақтар: <b>${done} / ${session.list.length}</b>.${left > 0 ? `<br><span style="color:#fcd34d;">Жауапсыз қалғаны: ${left} сұрақ.</span>` : ''}</p>`,
+        `<button class="btn btn-ghost" onclick="closeModal()">Артқа</button>
+         <button class="btn btn-green" onclick="closeModal(); finishQuiz();">Аяқтау және тексеру</button>`
+      );
+    }
+
+    // =========================================================================
+    // 13. FINISH, RESULTS & REVIEW
+    // =========================================================================
+    function finishQuiz() {
+      clearInterval(session.timer);
+      session.active = false;
+
+      let correct = 0;
+      let curStreak = 0;
+      let bestStreak = 0;
+
+      session.list.forEach((q, idx) => {
+        const chosen = session.answers[idx];
+        if (chosen === q.ans) {
+          correct++;
+          curStreak++;
+          if (curStreak > bestStreak) bestStreak = curStreak;
+          solvedSet.add(q.id);
+          errorSet.delete(q.id);
+        } else {
+          curStreak = 0;
+          errorSet.add(q.id);
+        }
+      });
+
+      const total = session.list.length;
+      const pct = Math.round((correct / Math.max(1, total)) * 100);
+
+      if (session.mode === 'exam') {
+        session.score = correct * 100;
+        session.maxStreak = bestStreak;
+        if (!bestExam || correct > bestExam.correct) {
+          bestExam = { correct, total, pct };
+        }
+      }
+      saveStorage();
+
+      document.getElementById('quizView').classList.add('hidden');
+      document.getElementById('resultView').classList.remove('hidden');
+
+      document.getElementById('resCorrect').textContent = `${correct} / ${total}`;
+      document.getElementById('resPct').textContent = `${pct}%`;
+      document.getElementById('resScore').textContent = session.score;
+      document.getElementById('resStreak').textContent = `🔥 ${session.maxStreak}`;
+
+      const passed = session.mode === 'exam' ? correct >= 32 : pct >= 80;
+      document.getElementById('resEmoji').textContent = passed ? '🏆' : (pct >= 50 ? '💪' : '📚');
+      document.getElementById('resTitle').textContent = passed
+        ? 'Керемет! 80%+ межесінен сәтті өттіңіз!'
+        : (pct >= 50 ? 'Жақсы нәтиже, бірақ қателерді пысықтаңыз!' : 'Жаттау режимінде қайталап көріңіз');
+      document.getElementById('resSub').textContent = `${session.title} • Нәтиже: ${pct}%`;
+
+      const wrongCount = total - correct;
+      const rwBtn = document.getElementById('retryWrongBtn');
+      if (wrongCount > 0) {
+        rwBtn.classList.remove('hidden');
+        rwBtn.textContent = `🔄 Қателерді қайта тапсыру (${wrongCount})`;
+      } else {
+        rwBtn.classList.add('hidden');
+      }
+
+      renderReview('all');
+
+      if (passed) {
+        Sound.finish();
+        launchConfetti();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderReview(filter) {
+      document.getElementById('revAllBtn').className = filter === 'all' ? 'btn btn-purple' : 'btn btn-ghost';
+      document.getElementById('revWrongBtn').className = filter === 'wrong' ? 'btn btn-danger' : 'btn btn-ghost';
+      document.getElementById('revAllBtn').style.padding = '6px 12px';
+      document.getElementById('revWrongBtn').style.padding = '6px 12px';
+
+      const rows = session.list
+        .map((q, idx) => ({ q, idx, chosen: session.answers[idx] }))
+        .filter(r => filter === 'all' || r.chosen !== r.q.ans);
+
+      const box = document.getElementById('reviewList');
+      if (!rows.length) {
+        box.innerHTML = '<div style="text-align:center;padding:24px;color:var(--green);font-weight:800;">Қате жоқ — 100% дұрыс! 🎉</div>';
+        return;
+      }
+
+      box.innerHTML = rows.map(({ q, idx, chosen }) => {
+        const ok = chosen === q.ans;
+        const userTxt = chosen === undefined || chosen === -1
+          ? '<span style="color:#fcd34d;">Жауап берілмеді</span>'
+          : `<span style="color:${ok ? '#6ee7b7' : '#fca5a5'};font-weight:800;">${LETTERS[chosen]}) ${escapeHtml(q.opts[chosen])}</span>`;
+        return `
+          <div class="bank-card" style="border-color:${ok ? 'rgba(16,185,129,0.4)' : 'rgba(239,68,68,0.45)'};">
+            <div class="q-meta">
+              <span class="stat-sub">Сұрақ ${idx + 1} (№${q.id})</span>
+              <span class="badge ${ok ? 'badge-green' : 'badge-amber'}">${ok ? '✅ Дұрыс' : '❌ Қате'}</span>
+            </div>
+            <div style="font-weight:800;color:#fff;font-size:0.94rem;">${escapeHtml(q.q)}</div>
+            ${q.code ? `<pre class="code-box">${escapeHtml(q.code)}</pre>` : ''}
+            ${q.visual ? `<div class="vis-wrap">${q.visual}</div>` : ''}
+            <div style="font-size:0.85rem;padding-top:6px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:4px;">
+              <div><span style="color:var(--muted);">Сіздің жауабыңыз: </span>${userTxt}</div>
+              ${ok ? '' : `<div><span style="color:var(--muted);">Дұрыс жауап: </span><span style="color:#6ee7b7;font-weight:800;">${LETTERS[q.ans]}) ${escapeHtml(q.opts[q.ans])}</span></div>`}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function retryWrong() {
+      const wrongList = session.list.filter((q, idx) => session.answers[idx] !== q.ans);
+      if (!wrongList.length) return;
+      launchQuiz(`🔄 Қатемен жұмыс (${wrongList.length} сұрақ)`, 'study', wrongList, session.restartFn);
+    }
+
+    function restartQuiz() {
+      if (typeof session.restartFn === 'function') session.restartFn();
+      else goHome();
+    }
+
+    function goHome() {
+      clearInterval(session.timer);
+      session.active = false;
+      document.getElementById('quizView').classList.add('hidden');
+      document.getElementById('resultView').classList.add('hidden');
+      document.getElementById('dashboardView').classList.remove('hidden');
+      renderDashboard();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================================
+    // 14. CANVAS CONFETTI
+    // =========================================================================
+    function launchConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const colors = ['#38bdf8', '#a855f7', '#10b981', '#f59e0b', '#ec4899', '#fde047'];
+      const pieces = Array.from({ length: 120 }, () => ({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * 220,
+        w: 6 + Math.random() * 6,
+        h: 8 + Math.random() * 8,
+        vx: (Math.random() - 0.5) * 4.5,
+        vy: 3 + Math.random() * 4.5,
+        rot: Math.random() * Math.PI * 2,
+        vr: (Math.random() - 0.5) * 0.22,
+        c: colors[Math.floor(Math.random() * colors.length)]
+      }));
+      let tick = 0;
+      function step() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vr;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.c;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+        tick++;
+        if (tick < 165) requestAnimationFrame(step);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // =========================================================================
+    // 15. KEYBOARD SHORTCUTS & GLOBAL WINDOW EXPORTS
+    // =========================================================================
+    document.addEventListener('keydown', e => {
+      if (!session.active) return;
+      if (!document.getElementById('modalBackdrop').classList.contains('hidden')) {
+        if (e.key === 'Escape') closeModal();
+        return;
+      }
+      const k = e.key.toLowerCase();
+      if (k === '1' || k === 'a') selectOption(0);
+      else if (k === '2' || k === 'b') selectOption(1);
+      else if (k === '3' || k === 'c') selectOption(2);
+      else if (k === '4' || k === 'd') selectOption(3);
+      else if (k === 'enter' || k === ' ') {
+        if (session.answers[session.index] !== undefined || session.mode === 'exam') {
+          e.preventDefault();
+          nextQ();
+        }
+      } else if (k === 'arrowright') nextQ();
+      else if (k === 'arrowleft') prevQ();
+    });
+
+    Object.assign(window, {
+      goHome,
+      toggleSound,
+      setMode,
+      switchTab,
+      startContextBlock,
+      startContextMarathon,
+      startClosedPack,
+      startErrorBank,
+      askClearErrors,
+      confirmClearErrors,
+      startExam,
+      renderBank,
+      toggleContextPanel,
+      selectOption,
+      prevQ,
+      nextQ,
+      jumpToQ,
+      toggleFlag,
+      openMapModal,
+      askExitQuiz,
+      askFinishQuiz,
+      finishQuiz,
+      renderReview,
+      retryWrong,
+      restartQuiz,
+      closeModal,
+      backdropClick
+    });
+
+    // Boot
+    loadStorage();
+    renderDashboard();
+  </script>
+</body>
+</html>
